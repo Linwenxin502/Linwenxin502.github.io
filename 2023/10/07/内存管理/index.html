@@ -22,8 +22,8 @@
 
   <meta name="description" content="内存管理概述内存管理机制定义：把物理的存储资源用一定的规则和手段管理起来，以供操作系统和应用程序使用 主要操作：内存块的分配和回收 评价指标：内存利用率、内存块分配和回收的效率、时间确定性 两种分配方法：静态分配和动态分配  静态分配简单，但必须事先预知分配的数量（代码大小、数据大小），且缺乏灵活性 动态分配灵活，但会消耗额外的时间和内存开销，可能产生内存碎片  通用内存分配内存空间划分：代码区，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内存管理">
-<meta property="og:url" content="http://example.com/2023/09/27/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:title" content="内存管理(嵌入式系统与应用)">
+<meta property="og:url" content="http://example.com/2023/10/07/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
 <meta property="og:site_name" content="Blog of WenXinLin">
 <meta property="og:description" content="内存管理概述内存管理机制定义：把物理的存储资源用一定的规则和手段管理起来，以供操作系统和应用程序使用 主要操作：内存块的分配和回收 评价指标：内存利用率、内存块分配和回收的效率、时间确定性 两种分配方法：静态分配和动态分配  静态分配简单，但必须事先预知分配的数量（代码大小、数据大小），且缺乏灵活性 动态分配灵活，但会消耗额外的时间和内存开销，可能产生内存碎片  通用内存分配内存空间划分：代码区，">
 <meta property="og:locale" content="en_US">
@@ -34,13 +34,13 @@
 <meta property="og:image" content="http://example.com/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/Partition_created_by_OSMemCreate.png">
 <meta property="og:image" content="http://example.com/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E5%9F%BA%E4%BA%8E%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="http://example.com/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E5%9F%BA%E4%BA%8E%E9%9D%99%E6%80%81%E5%9F%9F%E7%9A%84MMU%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F.png">
-<meta property="article:published_time" content="2023-09-27T10:00:21.294Z">
-<meta property="article:modified_time" content="2023-09-27T10:00:21.294Z">
+<meta property="article:published_time" content="2023-10-07T06:55:51.882Z">
+<meta property="article:modified_time" content="2023-10-07T06:55:51.882Z">
 <meta property="article:author" content="LinWenXin">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%A9%BA%E9%97%B2%E5%86%85%E5%AD%98%E5%9D%97%E9%93%BE%E8%A1%A8.png">
 
-<link rel="canonical" href="http://example.com/2023/09/27/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+<link rel="canonical" href="http://example.com/2023/10/07/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
 
 
 <script id="page-configurations">
@@ -53,7 +53,7 @@
   };
 </script>
 
-  <title>内存管理 | Blog of WenXinLin</title>
+  <title>内存管理(嵌入式系统与应用) | Blog of WenXinLin</title>
   
 
 
@@ -122,7 +122,7 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">4</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">5</span></a>
 
   </li>
   </ul>
@@ -154,7 +154,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/27/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/07/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/myicon.jpg">
@@ -167,7 +167,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          内存管理
+          内存管理(嵌入式系统与应用)
         </h1>
 
         <div class="post-meta">
@@ -177,7 +177,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-09-27 18:00:21" itemprop="dateCreated datePublished" datetime="2023-09-27T18:00:21+08:00">2023-09-27</time>
+              <time title="Created: 2023-10-07 14:55:51" itemprop="dateCreated datePublished" datetime="2023-10-07T14:55:51+08:00">2023-10-07</time>
             </span>
 
           
@@ -208,13 +208,13 @@
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 栈内存分配</span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">AllocStrFromStack</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> pstr[<span class="number">100</span>];</span><br><span class="line">    <span class="keyword">return</span> pstr; <span class="comment">//退出释放</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 堆内存分配</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> *str; <span class="comment">// 局部变量</span></span><br><span class="line">	<span class="keyword">if</span> ((str = <span class="built_in">malloc</span>(<span class="number">15</span>)) == <span class="literal">NULL</span>) <span class="comment">// 动态分配</span></span><br><span class="line">	&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">&quot;Not enough memory to allocate buffer\n&quot;</span>);</span><br><span class="line">  		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line"> 	&#125;</span><br><span class="line"> 	<span class="comment">// 内部处理</span></span><br><span class="line"> 	<span class="built_in">strcpy</span>(str,<span class="string">&quot;hello world&quot;</span>); <span class="comment">//初始化</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;String is %s\n&quot;</span>,str);</span><br><span class="line"> 	<span class="built_in">free</span>(str); <span class="comment">// 释放：指针记录的内容还在</span></span><br><span class="line">	str = <span class="literal">NULL</span>; <span class="comment">// 清楚为空指针，不可用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>使用malloc()和free()的内存分配特点</p>
+<p>使用malloc()和free()的内存分配特点：</p>
 <ul>
 <li>需要编译器库提供malloc()和free()函数</li>
 <li>执行时间不具有确定性</li>
 <li>可能明显增大RTOS内核的代码大小</li>
 </ul>
-<p>嵌入式实时内核内存管理要求</p>
+<p>嵌入式实时内核内存管理要求：</p>
 <ul>
 <li>实时性<ul>
 <li>内存分配尽可能快，且具有<strong>确定</strong>性。</li>
@@ -229,8 +229,7 @@
 </ul>
 </li>
 </ul>
-<p>不同实时内核所采用的内存管理方式不同，有的简单，有的复杂</p>
-<p>实时内核所采用的内存管理方式与应用领域和硬件环境密切相关</p>
+<p>实时内核所采用的内存管理方式与<strong>应用领域</strong>和<strong>硬件环境</strong>密切相关：</p>
 <ul>
 <li>在强实时应用领域，内存管理方法就比较简单，甚至不提供内存管理功能</li>
 <li>一些实时性要求不高，可靠性要求比较高，且系统比较复杂的应用在内存管理上就相对复杂些，可能需要实现对操作系统或是任务的保护</li>
@@ -238,11 +237,11 @@
 <h3 id="嵌入式实时操作系统在内存管理方面特点"><a href="#嵌入式实时操作系统在内存管理方面特点" class="headerlink" title="嵌入式实时操作系统在内存管理方面特点"></a>嵌入式实时操作系统在内存管理方面特点</h3><ul>
 <li>快速而确定的内存管理<ul>
 <li><strong>不使用内存管理</strong>：最快速和最确定的内存管理方式，适用于那些小型的嵌入式系统，系统中的任务比较少，且数量固定</li>
-<li>通常的操作系统都至少具<strong>有基本的内存管理方法</strong>：提供内存分配与释放的系统调用</li>
+<li>通常的操作系统都至少具有<strong>基本的内存管理方法</strong>：提供内存分配与释放的系统调用</li>
 </ul>
 </li>
 <li>不使用虚拟存储技术<ul>
-<li>虚拟内存技术：为用户提供一种不受物理存储器结构和容量限制的存储管理技术，是桌面&#x2F;服务器操作系统为在所有任务中使用有限物理内存的通常方法，每个任务从内存中获得一定数量的页面，并且，当前不访问的页面将被置换出去，为需要页面的其他任务腾出空间</li>
+<li>虚拟内存技术：为用户提供一种不受物理存储器结构和容量限制的存储管理技术，每个任务从内存中获得一定数量的页面，并且当前不访问的页面将被置换出去，为需要页面的其他任务腾出空间</li>
 <li>置换是一种<strong>具有不确定性</strong>的操作：当任务需要使用当前被置换出去的页面中的代码和数据时，将不得不从磁盘中获取页面，而在内存中另外的页面又可能不得不需要先被置换出去</li>
 <li>在嵌入式实时操作系统中一般不使用虚拟存储技术，以<strong>避免页面置换所带来的开销</strong></li>
 </ul>
@@ -262,7 +261,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="实时内核内存管理机制"><a href="#实时内核内存管理机制" class="headerlink" title="实时内核内存管理机制"></a>实时内核内存管理机制</h2><p>常用内存管理方式</p>
+<h2 id="实时内核内存管理机制"><a href="#实时内核内存管理机制" class="headerlink" title="实时内核内存管理机制"></a>实时内核内存管理机制</h2><p>常用内存管理方式：</p>
 <ul>
 <li>固定大小存储区<ul>
 <li>在指定边界的一块地址连续的内存空间中，实现固定大小内存块的分配。</li>
@@ -274,8 +273,7 @@
 </li>
 </ul>
 <p>应用根据需要从固定大小存储区或者可变大小存储区中获得一块内存空间，用完后将该内存空间释放回相应的存储区。</p>
-<h3 id="固定大小存储区管理"><a href="#固定大小存储区管理" class="headerlink" title="固定大小存储区管理"></a>固定大小存储区管理</h3><p> 可供使用的一段连续的内存空间被称为是一个分区， 分区由大小固定的内存块构成，且分区的大小是内存块大小的整数倍数</p>
-<p>一个大小为512字节的分区，内存块为128个字节的分区 </p>
+<h3 id="固定大小存储区管理"><a href="#固定大小存储区管理" class="headerlink" title="固定大小存储区管理"></a>固定大小存储区管理</h3><p>可供使用的一段连续的内存空间被称为是一个分区， 分区由大小固定的内存块构成，且分区的大小是内存块大小的整数倍数<br>一个大小为512字节的分区，内存块为128个字节的分区</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">     PartitionID           ID;                       <span class="comment">/*分区的ID,ID表示分区的标识*/</span></span><br><span class="line">     PartitionName         Name;                     <span class="comment">/*分区的名字*/</span></span><br><span class="line">     <span class="type">void</span>                 *starting_address;         <span class="comment">/*分区的起始地址*/</span></span><br><span class="line">     <span class="type">int</span>                   length;                   <span class="comment">/*分区的长度,分区的存储单元的数量*/</span></span><br><span class="line">     <span class="type">int</span>                   buffer_size;              <span class="comment">/*内存块的大小*/</span></span><br><span class="line">     PartitionAttribute    attribute;                <span class="comment">/*属性*/</span></span><br><span class="line">     <span class="type">int</span>                   number_of_used_blocks;    <span class="comment">/*剩余内存块数*/</span></span><br><span class="line">     MemoryChain           memory;                   <span class="comment">/*内存块链,一个指针,指向分区中由空闲内存块组成的双向空闲内存块链表的头结点*/</span></span><br><span class="line">&#125;   Partition;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%A9%BA%E9%97%B2%E5%86%85%E5%AD%98%E5%9D%97%E9%93%BE%E8%A1%A8.png" alt="空闲内存块链表"></p>
@@ -290,21 +288,14 @@
 <li>获取当前所有分区的ID</li>
 <li>获取分区信息</li>
 </ul>
-<p>如果内存块处于<strong>空闲状态</strong>，将使用内存块中的几个字节作为控制结构，用来存放用于双向链接的前向指针和后向指针</p>
-<p>在<strong>使用内存块</strong>时，内存块中原有的控制信息不再有效，其中的所有存储空间都可以被使用</p>
-<p>固定大小存储区管理的<strong>系统开销</strong>对用户的影响为零</p>
-<p>由于内存块的大小固定，不存在<strong>外碎片</strong>的问题</p>
-<p>存在<strong>内碎片</strong>的问题</p>
+<p>如果内存块处于<strong>空闲状态</strong>，内存块中的几个字节将作为控制结构，用来存放用于双向链接的前向指针和后向指针<br>在<strong>使用内存块</strong>时，内存块中原有的控制信息不再有效，其中的所有存储空间都可以被使用<br>固定大小存储区管理的<strong>系统开销</strong>对用户的影响为零，由于内存块的大小固定，不存在<strong>外碎片</strong>的问题<br>但存在<strong>内碎片</strong>的问题</p>
 <h3 id="可变大小存储区管理"><a href="#可变大小存储区管理" class="headerlink" title="可变大小存储区管理"></a>可变大小存储区管理</h3><p>一种基于堆的管理方式（与传统堆操作不同）</p>
 <ul>
 <li>堆为一段连续的、大小可配置的内存空间，用来提供可变内存块的分配。</li>
 <li>可变内存块称为段，最小分配单位称为页，即段的大小是页的大小的整数倍。</li>
-<li>如果申请段的大小不是页的倍数，实时内核将会对段的大小进行调整，调整为页的倍数。<ul>
-<li>例如，从页大小为256个字节的堆中分配一个大小为350字节的段，实时内核实际分配的段大小为512个字节。</li>
+<li>如果申请段的大小不是页的倍数，实时内核将会对段的大小进行调整，调整为页的倍数。<br>(例如，从页大小为256个字节的堆中分配一个大小为350字节的段，实时内核实际分配的段大小为512个字节)</li>
 </ul>
-</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">      HeapID            ID;             	  <span class="comment">/*堆的ID*/</span></span><br><span class="line">      HeadName	        name;          	          <span class="comment">/*堆的名字*/</span></span><br><span class="line">      TaskQueue	        waitQueue; 	          <span class="comment">/*任务等待队列,如果任务从堆中申请段不能得到满足，将被阻塞在堆的等待队列上*/</span></span><br><span class="line">      <span class="type">void</span>              *starting_address;	  <span class="comment">/*内存空间起始地址*/</span></span><br><span class="line">      <span class="type">int</span>               length;		          <span class="comment">/*内存空间长度/字节,堆的大小*/</span></span><br><span class="line">      <span class="type">int</span>               page_size;	          <span class="comment">/*页长度（字节）*/</span></span><br><span class="line">      <span class="type">int</span>               maximum_segment_size;     <span class="comment">/*最大可用段大小*/</span></span><br><span class="line">      RegionAttribute   attribute;                <span class="comment">/*堆的属性*/</span></span><br><span class="line">      <span class="type">int</span>               number_of_used_blocks;    <span class="comment">/*分配的块数,已分配使用的内存块的数量*/</span></span><br><span class="line">      HeapMemoryChain   memory;                   <span class="comment">/*堆头控制结构,空闲段链表*/</span></span><br><span class="line">&#125;Heap; </span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">      HeapID            ID;             	  <span class="comment">/*堆的ID*/</span></span><br><span class="line">      HeadName	        name;          	          <span class="comment">/*堆的名字*/</span></span><br><span class="line">      TaskQueue	        waitQueue; 	          <span class="comment">/*任务等待队列,如果任务从堆中申请段不能得到满足，将被阻塞在堆的等待队列上*/</span></span><br><span class="line">      <span class="type">void</span>              *starting_address;	  <span class="comment">/*内存空间起始地址*/</span></span><br><span class="line">      <span class="type">int</span>               length;		          <span class="comment">/*内存空间长度/字节,堆的大小*/</span></span><br><span class="line">      <span class="type">int</span>               page_size;	          <span class="comment">/*页长度（字节）*/</span></span><br><span class="line">      <span class="type">int</span>               maximum_segment_size;     <span class="comment">/*最大可用段大小*/</span></span><br><span class="line">      RegionAttribute   attribute;                <span class="comment">/*堆的属性*/</span></span><br><span class="line">      <span class="type">int</span>               number_of_used_blocks;    <span class="comment">/*分配的块数,已分配使用的内存块的数量*/</span></span><br><span class="line">      HeapMemoryChain   memory;                   <span class="comment">/*堆头控制结构,空闲段链表*/</span></span><br><span class="line">&#125;Heap; </span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>可变大小存储区中的空闲段通过双向链表链接起来，形成一个空闲段链<ul>
@@ -338,7 +329,7 @@
 </ul>
 <h3 id="Memory-management-in-uC-OS-II"><a href="#Memory-management-in-uC-OS-II" class="headerlink" title="Memory management in uC&#x2F;OS-II"></a>Memory management in uC&#x2F;OS-II</h3><p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/fixed-sized_memory_blocks_from_a_partition.png" alt="fixed-sized memory blocks from a partition"></p>
 <p>内存分区，多内存分区</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* MEMORY CONTROL BLOCK   MCB    */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span>           </span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Pointer to beginning of memory partition*/</span></span><br><span class="line">    <span class="type">void</span>   *OSMemAddr;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Pointer to list of free memory blocks   */</span></span><br><span class="line">    <span class="type">void</span>   *OSMemFreeList;    </span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Size (in bytes) of each block of memory */</span>         </span><br><span class="line">    INT32U  OSMemBlkSize; </span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Total number of blocks in this partition*/</span></span><br><span class="line">    INT32U  OSMemNBlks;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* Number of memory blocks remaining in this partition*/</span></span><br><span class="line">    INT32U  OSMemNFree;                </span><br><span class="line">&#125; OS_MEM;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* MEMORY CONTROL BLOCK   MCB    */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="comment">/* Pointer to beginning of memory partition*/</span></span><br><span class="line">    <span class="type">void</span>   *OSMemAddr;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Pointer to list of free memory blocks   */</span></span><br><span class="line">    <span class="type">void</span>   *OSMemFreeList;    </span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Size (in bytes) of each block of memory */</span>         </span><br><span class="line">    INT32U  OSMemBlkSize; </span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Total number of blocks in this partition*/</span></span><br><span class="line">    INT32U  OSMemNBlks;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* Number of memory blocks remaining in this partition*/</span></span><br><span class="line">    INT32U  OSMemNFree;                </span><br><span class="line">&#125; OS_MEM;</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/List_of_free_memory_control_blocks.png" alt="List of free memory control blocks"></p>
 <p><em>List of free memory control blocks created by</em> <em>OS_MemInit</em></p>
@@ -494,12 +485,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/09/05/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/" rel="prev" title="四驱车直流电机驱动">
-      <i class="fa fa-chevron-left"></i> 四驱车直流电机驱动
+    <a href="/2023/10/07/%E6%96%87%E4%BB%B6/" rel="prev" title="文件管理">
+      <i class="fa fa-chevron-left"></i> 文件管理
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/09/27/%E6%96%87%E4%BB%B6/" rel="next" title="文件">
-      文件 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/10/07/web%E6%8E%A7%E5%88%B6arduino/" rel="next" title="通过网页控制Wemos（arduino平台系列）">
+      通过网页控制Wemos（arduino平台系列） <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -574,7 +565,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
