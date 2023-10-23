@@ -34,8 +34,8 @@
 <meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175521614.png">
 <meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175546261.png">
 <meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811181320598.png">
-<meta property="article:published_time" content="2023-10-23T11:47:31.617Z">
-<meta property="article:modified_time" content="2023-10-23T11:47:31.617Z">
+<meta property="article:published_time" content="2023-10-23T12:13:53.273Z">
+<meta property="article:modified_time" content="2023-10-23T12:13:53.273Z">
 <meta property="article:author" content="LinWenXin">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811173924155.png">
@@ -177,7 +177,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-10-23 19:47:31" itemprop="dateCreated datePublished" datetime="2023-10-23T19:47:31+08:00">2023-10-23</time>
+              <time title="Created: 2023-10-23 20:13:53" itemprop="dateCreated datePublished" datetime="2023-10-23T20:13:53+08:00">2023-10-23</time>
             </span>
 
           
@@ -195,10 +195,10 @@
 
 <p>遇到的问题： </p>
 <ol>
-<li>cannot identity ‘&#x2F;dev&#x2F;vedio0’, 如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811173924155.png" alt="在这里插入图片描述"></li>
+<li>cannot identity ‘&#x2F;dev&#x2F;vedio0’, 如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811173924155.png" alt="问题现象"></li>
 </ol>
 <blockquote>
-<p>原因：没有将摄像头链接到虚拟机Linux，这里只要在虚拟机菜单栏找个虚拟机-&gt;可移动设备，将摄像头链接到虚拟机即可，比如：我的电脑的摄像头名称是USB2.0 VGA UVC WebCam，找到之后点击连接到主机，若没有显示摄像头名称则说明你的电脑摄像头不兼容Linux系统，关于如何查看，可打开电脑设备管理器，在照相机的管理列表下则是你电脑的摄像头名称，如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174527797.png" alt="在这里插入图片描述"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174815599.png" alt="在这里插入图片描述"><br>2. 进程被杀，摄像头灯光亮一下就灭<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175254153.png" alt="在这里插入图片描述"><br>原因：配置太低了，可以到虚拟机-&gt;设置改一下USB控制器的兼容性，改到3.0就可以<img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175521614.png" alt="在这里插入图片描述"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175546261.png" alt="在这里插入图片描述"></p>
+<p>原因：没有将摄像头链接到虚拟机Linux，这里只要在虚拟机菜单栏找个虚拟机-&gt;可移动设备，将摄像头链接到虚拟机即可，比如：我的电脑的摄像头名称是USB2.0 VGA UVC WebCam，找到之后点击连接到主机，若没有显示摄像头名称则说明你的电脑摄像头不兼容Linux系统，关于如何查看，可打开电脑设备管理器，在照相机的管理列表下则是你电脑的摄像头名称，如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174527797.png" alt="信息列表"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174815599.png" alt="在这里插入图片描述"><br>2. 进程被杀，摄像头灯光亮一下就灭<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175254153.png" alt="在这里插入图片描述"><br>原因：配置太低了，可以到虚拟机-&gt;设置改一下USB控制器的兼容性，改到3.0就可以<img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175521614.png" alt="在这里插入图片描述"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175546261.png" alt="在这里插入图片描述"></p>
 </blockquote>
 <p>做到这里，虚拟机下的Linux-ros的摄像头驱动应该就可以跑起来了</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>. roscore //这里第一次跑摄像头驱动最好跑一下master控制节点</span><br><span class="line"><span class="number">2</span>. roslaunch usb_cam usb_cam<span class="literal">-test</span>.launch </span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -218,13 +218,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/10/07/%E5%9F%BA%E4%BA%8Encurses%E7%9A%84%E8%B4%AA%E5%90%83%E8%9B%87/" rel="prev" title="基于linux ncurses的C语言贪吃蛇">
+    <a href="/2023/10/23/%E5%9F%BA%E4%BA%8Encurses%E7%9A%84%E8%B4%AA%E5%90%83%E8%9B%87/" rel="prev" title="基于linux ncurses的C语言贪吃蛇">
       <i class="fa fa-chevron-left"></i> 基于linux ncurses的C语言贪吃蛇
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2023/10/23/%E5%B7%A5%E5%85%B7%E9%93%BE%E5%AE%89%E8%A3%85/" rel="next" title="Linux安装arm-linux交叉编译工具链">
-      Linux安装arm-linux交叉编译工具链 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     

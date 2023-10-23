@@ -141,6 +141,157 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/23/ros%E6%91%84%E5%83%8F%E5%A4%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myicon.jpg">
+      <meta itemprop="name" content="LinWenXin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of WenXinLin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/23/ros%E6%91%84%E5%83%8F%E5%A4%B4/" class="post-title-link" itemprop="url">Linux-ros安装以及驱动摄像头</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-23 20:13:53" itemprop="dateCreated datePublished" datetime="2023-10-23T20:13:53+08:00">2023-10-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Linux-ros安装以及驱动摄像头"><a href="#Linux-ros安装以及驱动摄像头" class="headerlink" title="Linux-ros安装以及驱动摄像头"></a>Linux-ros安装以及驱动摄像头</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>. sudo apt<span class="literal">-get</span> install ros<span class="literal">-melodic-usb-cam</span>  //melodic是我Linux下ros的版本号，这里根据你安装的ros版本写成对应的</span><br><span class="line"><span class="number">2</span>. roslaunch usb_cam usb_cam<span class="literal">-text</span>.launch</span><br><span class="line"><span class="number">3</span>. rqt_image_view</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>遇到的问题： </p>
+<ol>
+<li>cannot identity ‘&#x2F;dev&#x2F;vedio0’, 如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811173924155.png" alt="问题现象"></li>
+</ol>
+<blockquote>
+<p>原因：没有将摄像头链接到虚拟机Linux，这里只要在虚拟机菜单栏找个虚拟机-&gt;可移动设备，将摄像头链接到虚拟机即可，比如：我的电脑的摄像头名称是USB2.0 VGA UVC WebCam，找到之后点击连接到主机，若没有显示摄像头名称则说明你的电脑摄像头不兼容Linux系统，关于如何查看，可打开电脑设备管理器，在照相机的管理列表下则是你电脑的摄像头名称，如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174527797.png" alt="信息列表"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174815599.png" alt="在这里插入图片描述"><br>2. 进程被杀，摄像头灯光亮一下就灭<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175254153.png" alt="在这里插入图片描述"><br>原因：配置太低了，可以到虚拟机-&gt;设置改一下USB控制器的兼容性，改到3.0就可以<img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175521614.png" alt="在这里插入图片描述"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175546261.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<p>做到这里，虚拟机下的Linux-ros的摄像头驱动应该就可以跑起来了</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>. roscore //这里第一次跑摄像头驱动最好跑一下master控制节点</span><br><span class="line"><span class="number">2</span>. roslaunch usb_cam usb_cam<span class="literal">-test</span>.launch </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811181320598.png" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/23/%E5%9F%BA%E4%BA%8Encurses%E7%9A%84%E8%B4%AA%E5%90%83%E8%9B%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myicon.jpg">
+      <meta itemprop="name" content="LinWenXin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of WenXinLin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/23/%E5%9F%BA%E4%BA%8Encurses%E7%9A%84%E8%B4%AA%E5%90%83%E8%9B%87/" class="post-title-link" itemprop="url">基于linux ncurses的C语言贪吃蛇</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-23 20:12:31" itemprop="dateCreated datePublished" datetime="2023-10-23T20:12:31+08:00">2023-10-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="C语言实现贪吃蛇"><a href="#C语言实现贪吃蛇" class="headerlink" title="C语言实现贪吃蛇"></a>C语言实现贪吃蛇</h2><h6 id="对于ncurses库起初完全不熟悉，不知道有那些函数可以调用，在文章的开头先总结一下项目实现过程用到过的函数"><a href="#对于ncurses库起初完全不熟悉，不知道有那些函数可以调用，在文章的开头先总结一下项目实现过程用到过的函数" class="headerlink" title="对于ncurses库起初完全不熟悉，不知道有那些函数可以调用，在文章的开头先总结一下项目实现过程用到过的函数"></a>对于ncurses库起初完全不熟悉，不知道有那些函数可以调用，在文章的开头先总结一下项目实现过程用到过的函数</h6><ul>
+<li>initscr(）······· <code> 初始化屏幕</code></li>
+<li>raw() ······· <code>设置使所有的输入不需要输入回车就可以传递给程序</code></li>
+<li>noecho() ······· <code>设置不回显用户输入内容</code></li>
+<li>curs_set(0) ······· <code> 关闭光标显示</code></li>
+<li>keypad(stdscr, 1)······· <code>允许用户终端的键盘，允许getch()函数获取功能键</code></li>
+<li>nodelay(stdscr, 1) ······· <code> 多线程并发输入，使程序不用一直在getch()等待用户输入</code></li>
+<li>refresh() ······· <code> 刷新屏幕，将字符打印屏幕刷新显示</code></li>
+<li>endwin()······· <code>结束ncurse屏幕绘画</code></li>
+<li>printw() ······· <code> 格式化输出，相当于printf</code></li>
+<li>mvprintw ······· <code> 在指定位置格式化输出，前两个参数为屏幕坐标想x, y</code></li>
+</ul>
+<p>首先定义了蛇的特征，蛇的坐标等结构体，在结构体中包括了蛇的头，蛇的长度，完成时使用到了链表，所以保存了蛇的头，也就可以遍历整条蛇</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*snake coordinate including x,y*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">snake_coordinate</span> &#123;</span></span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">	<span class="type">int</span> y;</span><br><span class="line">&#125; SNAKE;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*snake body coordinate struct, to load the snake*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">snake_load</span> &#123;</span></span><br><span class="line">	SNAKE coordinate;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">snake_load</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; SNAKE_LOAD;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*snake features including snake_head, and it&#x27;s length*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">snake_features</span> &#123;</span></span><br><span class="line">	SNAKE_LOAD *head;</span><br><span class="line">	<span class="type">int</span> length;</span><br><span class="line">&#125; SNAKE_CREAT;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>下面是绘制地图的代码，地图格式为x（竖）：22；y（横）：25的大小，因为在linux的终端下横竖的间隔大小不一样，所以在横向上采用两个字符大小的显示空间来显示一个点</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*to print the game map*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">map</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">22</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">50</span>; j=j+<span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			mvprintw(i, j, <span class="string">&quot;*&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; <span class="number">21</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">2</span>; j &lt; <span class="number">48</span>; j=j+<span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			mvprintw(i, j, <span class="string">&quot; &quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是蛇的打印，过程比较简单，这里就不主要叙述，直接上代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Creat_snake</span><span class="params">(<span class="type">int</span> length)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> located_x = <span class="number">12</span>;</span><br><span class="line">	<span class="type">int</span> located_y = <span class="number">30</span>;</span><br><span class="line">	SNAKE snake;</span><br><span class="line">	snake_wx.length = length;</span><br><span class="line">	SNAKE_LOAD *snake_head_body = (SNAKE_LOAD*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(SNAKE_LOAD));</span><br><span class="line">	snake_wx.head = snake_head_body;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; snake_wx.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		snake.x = located_x;</span><br><span class="line">		snake.y = located_y;</span><br><span class="line">		located_x++;</span><br><span class="line">		SNAKE_LOAD *snake_body = (SNAKE_LOAD*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(SNAKE_LOAD));</span><br><span class="line">		snake_head_body-&gt;coordinate = snake;</span><br><span class="line">		snake_head_body-&gt;next = snake_body;</span><br><span class="line">		snake_head_body = snake_body;</span><br><span class="line">	&#125;</span><br><span class="line">	Print_snake();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们将重点放在最令人头疼的地方，就是创建食物，食物的创建十分讲究，因为它的坐标不能落在蛇身上，也不能落在墙上，后者比较简单，前者难的原因主要在，食物的坐标是通过随机数产生的，产生一次后若刚好在蛇身上，得继续生成一个不在蛇的身上的，起初用到的方法最简单，但也是最难的，哭了，即是一个循环，让它不断产生直到满足条件，这里出现的问题是蛇在移动过程会出现卡顿现象，所以后来修改了另一种方法，第二种方法是如果不满足就继续调用食物创建函数直到满足条件，类似递归，这样做的问题在于会产生段错误，就是在调用rand的时候产生，至今未弄明白是为什么，最后采用了下面这种方法，即如果创建后在蛇身上，即进行加减运算处理，来满足条件，我也不知道还有没有其他的方法，希望有懂的小伙伴一起讨论。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Creat_food</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> flag = <span class="number">1</span>;</span><br><span class="line">	SNAKE_LOAD *snake_head = snake_wx.head;</span><br><span class="line">	srand((<span class="type">unsigned</span> <span class="type">int</span>)time(<span class="literal">NULL</span>));</span><br><span class="line">	snake_food.x = rand() % <span class="number">19</span>;</span><br><span class="line">	snake_food.y = rand() % <span class="number">23</span>;</span><br><span class="line">	snake_food.y = snake_food.y * <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (snake_food.x &lt; <span class="number">1</span> || snake_food.y &lt; <span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (snake_food.x &lt;= <span class="number">1</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				snake_food.x = snake_food.x + <span class="number">2</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (snake_food.y &lt;= <span class="number">2</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				snake_food.y = snake_food.y * <span class="number">2</span>;</span><br><span class="line">				<span class="keyword">if</span> (snake_food.y == <span class="number">0</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.y = snake_food.y + <span class="number">2</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		snake_head = snake_wx.head;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; snake_wx.length; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (snake_food.x == snake_head-&gt;coordinate.x &amp;&amp; snake_food.y == snake_head-&gt;coordinate.y)</span><br><span class="line">			&#123;</span><br><span class="line">				flag = <span class="number">0</span>;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			snake_head = snake_head-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (flag == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (key == <span class="number">260</span> || key == <span class="number">261</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (snake_food.x &lt; <span class="number">19</span> &amp;&amp; snake_food.x &gt; <span class="number">5</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.x = snake_food.x - <span class="number">2</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span> (snake_food.x &lt; <span class="number">5</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.x = snake_food.x + <span class="number">4</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (key == <span class="number">259</span> || key == <span class="number">258</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span> (snake_food.y/<span class="number">2</span> &lt; <span class="number">23</span> &amp;&amp; snake_food.y/<span class="number">2</span> &gt; <span class="number">5</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.y = (snake_food.y/<span class="number">2</span> - <span class="number">4</span>) * <span class="number">2</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span> (snake_food.y/<span class="number">2</span> &lt; <span class="number">5</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.y = (snake_food.y/<span class="number">2</span> + <span class="number">4</span>) * <span class="number">2</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			flag = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	mvprintw(snake_food.x, snake_food.y, <span class="string">&quot;O&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>最后还有一个重点的地方就是主函数的getch()获取用户输入，这个函数是会构成等待结果，所以要用nodelay这个函数让它不等待，才可以实现蛇的一直移动</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Main*/</span></span><br><span class="line"><span class="keyword">while</span> ((key = getch()))</span><br><span class="line">&#123;</span><br><span class="line">		<span class="keyword">if</span> (key &gt; <span class="number">0</span>)  <span class="comment">/*keydown*/</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (key == <span class="number">258</span> &amp;&amp; last_key == <span class="number">259</span>)&#123;</span><br><span class="line">				key = <span class="number">259</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (key == <span class="number">259</span> &amp;&amp; last_key == <span class="number">258</span>)&#123;</span><br><span class="line">				key = <span class="number">258</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (key == <span class="number">260</span> &amp;&amp; last_key == <span class="number">261</span>)&#123;</span><br><span class="line">				key = <span class="number">261</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (key == <span class="number">261</span> &amp;&amp; last_key == <span class="number">260</span>)&#123;</span><br><span class="line">				key = <span class="number">260</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			last_key = key;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>	   <span class="comment">/*Don&#x27;t keydown*/</span></span><br><span class="line">		&#123;</span><br><span class="line">			key = last_key;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">switch</span>(key)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">258</span>: <span class="comment">//printw(&quot;down\n&quot;);</span></span><br><span class="line">				  down();</span><br><span class="line">				  <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">259</span>: <span class="comment">//printw(&quot;up\n&quot;);</span></span><br><span class="line">				  up();</span><br><span class="line">				  <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">260</span>: <span class="comment">//printw(&quot;left\n&quot;);</span></span><br><span class="line">				  left();</span><br><span class="line">				  <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">261</span>: <span class="comment">//printw(&quot;right\n&quot;);</span></span><br><span class="line">				  right();</span><br><span class="line">				  <span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (key == <span class="number">3</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (snake_wx.head-&gt;coordinate.x == <span class="number">0</span> || snake_wx.head-&gt;coordinate.y == <span class="number">0</span> || snake_wx.head-&gt;coordinate.x == <span class="number">21</span> || snake_wx.head-&gt;coordinate.y == <span class="number">48</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (snake_wx.head-&gt;coordinate.x == snake_food.x &amp;&amp; snake_wx.head-&gt;coordinate.y == snake_food.y)</span><br><span class="line">		&#123;</span><br><span class="line">			Creat_food();</span><br><span class="line">			Eat_food();</span><br><span class="line">		&#125;</span><br><span class="line">		refresh();</span><br><span class="line">		usleep(<span class="number">120000</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/23/%E5%B7%A5%E5%85%B7%E9%93%BE%E5%AE%89%E8%A3%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -165,7 +316,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-10-23 19:56:11" itemprop="dateCreated datePublished" datetime="2023-10-23T19:56:11+08:00">2023-10-23</time>
+              <time title="Created: 2023-10-23 20:06:48" itemprop="dateCreated datePublished" datetime="2023-10-23T20:06:48+08:00">2023-10-23</time>
             </span>
 
           
@@ -191,7 +342,7 @@
 </li>
 <li><p>拷贝到之后通过命令 sudo tar -vxf  gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf.tar进行解压</p>
 </li>
-<li><p>解压完成后，在&#x2F;usr&#x2F;local&#x2F;arm会看到这样的一个目录<img src="/images/blog_images/%E5%B7%A5%E5%85%B7%E9%93%BE/20200818151609868.png" alt="在这里插入图片描述"></p>
+<li><p>解压完成后，在&#x2F;usr&#x2F;local&#x2F;arm会看到这样的一个目录<img src="/images/blog_images/%E5%B7%A5%E5%85%B7%E9%93%BE/20200818151609868.png" alt="解压目录"></p>
 </li>
 <li><p>到这里安装就快完成了，还需到&#x2F;etc&#x2F;profile文件里，添加如下命令设置环境变量：</p>
 <pre><code>   export PATH=$PATH:/usr/local/arm/gcc/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/bin
@@ -219,7 +370,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/23/ros%E6%91%84%E5%83%8F%E5%A4%B4/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/23/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/myicon.jpg">
@@ -233,7 +384,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/10/23/ros%E6%91%84%E5%83%8F%E5%A4%B4/" class="post-title-link" itemprop="url">Linux-ros安装以及驱动摄像头</a>
+            <a href="/2023/10/23/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">四驱车直流电机驱动</a>
         </h2>
 
         <div class="post-meta">
@@ -243,7 +394,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-10-23 19:47:31" itemprop="dateCreated datePublished" datetime="2023-10-23T19:47:31+08:00">2023-10-23</time>
+              <time title="Created: 2023-10-23 20:06:16" itemprop="dateCreated datePublished" datetime="2023-10-23T20:06:16+08:00">2023-10-23</time>
             </span>
 
           
@@ -257,100 +408,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="Linux-ros安装以及驱动摄像头"><a href="#Linux-ros安装以及驱动摄像头" class="headerlink" title="Linux-ros安装以及驱动摄像头"></a>Linux-ros安装以及驱动摄像头</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>. sudo apt<span class="literal">-get</span> install ros<span class="literal">-melodic-usb-cam</span>  //melodic是我Linux下ros的版本号，这里根据你安装的ros版本写成对应的</span><br><span class="line"><span class="number">2</span>. roslaunch usb_cam usb_cam<span class="literal">-text</span>.launch</span><br><span class="line"><span class="number">3</span>. rqt_image_view</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>遇到的问题： </p>
-<ol>
-<li>cannot identity ‘&#x2F;dev&#x2F;vedio0’, 如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811173924155.png" alt="在这里插入图片描述"></li>
-</ol>
-<blockquote>
-<p>原因：没有将摄像头链接到虚拟机Linux，这里只要在虚拟机菜单栏找个虚拟机-&gt;可移动设备，将摄像头链接到虚拟机即可，比如：我的电脑的摄像头名称是USB2.0 VGA UVC WebCam，找到之后点击连接到主机，若没有显示摄像头名称则说明你的电脑摄像头不兼容Linux系统，关于如何查看，可打开电脑设备管理器，在照相机的管理列表下则是你电脑的摄像头名称，如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174527797.png" alt="在这里插入图片描述"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174815599.png" alt="在这里插入图片描述"><br>2. 进程被杀，摄像头灯光亮一下就灭<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175254153.png" alt="在这里插入图片描述"><br>原因：配置太低了，可以到虚拟机-&gt;设置改一下USB控制器的兼容性，改到3.0就可以<img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175521614.png" alt="在这里插入图片描述"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175546261.png" alt="在这里插入图片描述"></p>
-</blockquote>
-<p>做到这里，虚拟机下的Linux-ros的摄像头驱动应该就可以跑起来了</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>. roscore //这里第一次跑摄像头驱动最好跑一下master控制节点</span><br><span class="line"><span class="number">2</span>. roslaunch usb_cam usb_cam<span class="literal">-test</span>.launch </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811181320598.png" alt="在这里插入图片描述"></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/07/%E5%9F%BA%E4%BA%8Encurses%E7%9A%84%E8%B4%AA%E5%90%83%E8%9B%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/myicon.jpg">
-      <meta itemprop="name" content="LinWenXin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog of WenXinLin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/07/%E5%9F%BA%E4%BA%8Encurses%E7%9A%84%E8%B4%AA%E5%90%83%E8%9B%87/" class="post-title-link" itemprop="url">基于linux ncurses的C语言贪吃蛇</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-10-07 16:05:56" itemprop="dateCreated datePublished" datetime="2023-10-07T16:05:56+08:00">2023-10-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="C语言实现贪吃蛇"><a href="#C语言实现贪吃蛇" class="headerlink" title="C语言实现贪吃蛇"></a>C语言实现贪吃蛇</h2><h6 id="对于ncurses库起初完全不熟悉，不知道有那些函数可以调用，在文章的开头先总结一下项目实现过程用到过的函数"><a href="#对于ncurses库起初完全不熟悉，不知道有那些函数可以调用，在文章的开头先总结一下项目实现过程用到过的函数" class="headerlink" title="对于ncurses库起初完全不熟悉，不知道有那些函数可以调用，在文章的开头先总结一下项目实现过程用到过的函数"></a>对于ncurses库起初完全不熟悉，不知道有那些函数可以调用，在文章的开头先总结一下项目实现过程用到过的函数</h6><ul>
-<li>initscr(）······· <code> 初始化屏幕</code></li>
-<li>raw() ······· <code>设置使所有的输入不需要输入回车就可以传递给程序</code></li>
-<li>noecho() ······· <code>设置不回显用户输入内容</code></li>
-<li>curs_set(0) ······· <code> 关闭光标显示</code></li>
-<li>keypad(stdscr, 1)······· <code>允许用户终端的键盘，允许getch()函数获取功能键</code></li>
-<li>nodelay(stdscr, 1) ······· <code> 多线程并发输入，使程序不用一直在getch()等待用户输入</code></li>
-<li>refresh() ······· <code> 刷新屏幕，将字符打印屏幕刷新显示</code></li>
-<li>endwin()······· <code>结束ncurse屏幕绘画</code></li>
-<li>printw() ······· <code> 格式化输出，相当于printf</code></li>
-<li>mvprintw ······· <code> 在指定位置格式化输出，前两个参数为屏幕坐标想x, y</code></li>
-</ul>
-<p>首先定义了蛇的特征，蛇的坐标等结构体，在结构体中包括了蛇的头，蛇的长度，完成时使用到了链表，所以保存了蛇的头，也就可以遍历整条蛇</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*snake coordinate including x,y*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">snake_coordinate</span>&#123;</span></span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">	<span class="type">int</span> y;</span><br><span class="line">&#125;SNAKE;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*snake body coordinate struct, to load the snake*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">snake_load</span>&#123;</span></span><br><span class="line">	SNAKE coordinate;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">snake_load</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;SNAKE_LOAD;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*snake features including snake_head, and it&#x27;s length*/</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">snake_features</span>&#123;</span></span><br><span class="line">	SNAKE_LOAD *head;</span><br><span class="line">	<span class="type">int</span> length;</span><br><span class="line">&#125;SNAKE_CREAT;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>下面是绘制地图的代码，地图格式为x（竖）：22；y（横）：25的大小，因为在linux的终端下横竖的间隔大小不一样，所以在横向上采用两个字符大小的显示空间来显示一个点</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*to print the game map*/</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">map</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">22</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">0</span>; j &lt; <span class="number">50</span>; j=j+<span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			mvprintw(i, j, <span class="string">&quot;*&quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">1</span>; i &lt; <span class="number">21</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> j = <span class="number">2</span>; j &lt; <span class="number">48</span>; j=j+<span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			mvprintw(i, j, <span class="string">&quot; &quot;</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>下面是蛇的打印，过程比较简单，这里就不主要叙述，直接上代码</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Creat_snake</span><span class="params">(<span class="type">int</span> length)</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> located_x = <span class="number">12</span>;</span><br><span class="line">	<span class="type">int</span> located_y = <span class="number">30</span>;</span><br><span class="line">	SNAKE snake;</span><br><span class="line">	snake_wx.length = length;</span><br><span class="line">	SNAKE_LOAD *snake_head_body = (SNAKE_LOAD*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(SNAKE_LOAD));</span><br><span class="line">	snake_wx.head = snake_head_body;</span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; snake_wx.length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		snake.x = located_x;</span><br><span class="line">		snake.y = located_y;</span><br><span class="line">		located_x++;</span><br><span class="line">		SNAKE_LOAD *snake_body = (SNAKE_LOAD*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(SNAKE_LOAD));</span><br><span class="line">		snake_head_body-&gt;coordinate = snake;</span><br><span class="line">		snake_head_body-&gt;next = snake_body;</span><br><span class="line">		snake_head_body = snake_body;</span><br><span class="line">	&#125;</span><br><span class="line">	Print_snake();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们将重点放在最令人头疼的地方，就是创建食物，食物的创建十分讲究，因为它的坐标不能落在蛇身上，也不能落在墙上，后者比较简单，前者难的原因主要在，食物的坐标是通过随机数产生的，产生一次后若刚好在蛇身上，得继续生成一个不在蛇的身上的，起初用到的方法最简单，但也是最难的，哭了，即是一个循环，让它不断产生直到满足条件，这里出现的问题是蛇在移动过程会出现卡顿现象，所以后来修改了另一种方法，第二种方法是如果不满足就继续调用食物创建函数直到满足条件，类似递归，这样做的问题在于会产生段错误，就是在调用rand的时候产生，至今未弄明白是为什么，最后采用了下面这种方法，即如果创建后在蛇身上，即进行加减运算处理，来满足条件，我也不知道还有没有其他的方法，希望有懂的小伙伴一起讨论。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Creat_food</span><span class="params">()</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> flag = <span class="number">1</span>;</span><br><span class="line">	SNAKE_LOAD *snake_head = snake_wx.head;</span><br><span class="line">	srand((<span class="type">unsigned</span> <span class="type">int</span>)time(<span class="literal">NULL</span>));</span><br><span class="line">	snake_food.x = rand() % <span class="number">19</span>;</span><br><span class="line">	snake_food.y = rand() % <span class="number">23</span>;</span><br><span class="line">	snake_food.y = snake_food.y * <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(snake_food.x &lt; <span class="number">1</span> || snake_food.y &lt; <span class="number">2</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(snake_food.x &lt;= <span class="number">1</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				snake_food.x = snake_food.x + <span class="number">2</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(snake_food.y &lt;= <span class="number">2</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				snake_food.y = snake_food.y * <span class="number">2</span>;</span><br><span class="line">				<span class="keyword">if</span>(snake_food.y == <span class="number">0</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.y = snake_food.y + <span class="number">2</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		snake_head = snake_wx.head;</span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; snake_wx.length; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(snake_food.x == snake_head-&gt;coordinate.x &amp;&amp; snake_food.y == snake_head-&gt;coordinate.y)</span><br><span class="line">			&#123;</span><br><span class="line">				flag = <span class="number">0</span>;</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			snake_head = snake_head-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(flag == <span class="number">1</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(key == <span class="number">260</span> || key == <span class="number">261</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>(snake_food.x &lt; <span class="number">19</span> &amp;&amp; snake_food.x &gt; <span class="number">5</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.x = snake_food.x - <span class="number">2</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span>(snake_food.x &lt; <span class="number">5</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.x = snake_food.x + <span class="number">4</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(key == <span class="number">259</span> || key == <span class="number">258</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">if</span>(snake_food.y/<span class="number">2</span> &lt; <span class="number">23</span> &amp;&amp; snake_food.y/<span class="number">2</span> &gt; <span class="number">5</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.y = (snake_food.y/<span class="number">2</span> - <span class="number">4</span>) * <span class="number">2</span>;</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">if</span>(snake_food.y/<span class="number">2</span> &lt; <span class="number">5</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					snake_food.y = (snake_food.y/<span class="number">2</span> + <span class="number">4</span>) * <span class="number">2</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			flag = <span class="number">1</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	mvprintw(snake_food.x, snake_food.y, <span class="string">&quot;O&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>最后还有一个重点的地方就是主函数的getch()获取用户输入，这个函数是会构成等待结果，所以要用nodelay这个函数让它不等待，才可以实现蛇的一直移动</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Main*/</span></span><br><span class="line"><span class="keyword">while</span>((key = getch()))&#123;</span><br><span class="line">		<span class="keyword">if</span>(key &gt; <span class="number">0</span>)  <span class="comment">/*keydown*/</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(key == <span class="number">258</span> &amp;&amp; last_key == <span class="number">259</span>)&#123;</span><br><span class="line">				key = <span class="number">259</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(key == <span class="number">259</span> &amp;&amp; last_key == <span class="number">258</span>)&#123;</span><br><span class="line">				key = <span class="number">258</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(key == <span class="number">260</span> &amp;&amp; last_key == <span class="number">261</span>)&#123;</span><br><span class="line">				key = <span class="number">261</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span>(key == <span class="number">261</span> &amp;&amp; last_key == <span class="number">260</span>)&#123;</span><br><span class="line">				key = <span class="number">260</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			last_key = key;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span>	   <span class="comment">/*Don&#x27;t keydown*/</span></span><br><span class="line">		&#123;</span><br><span class="line">			key = last_key;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">switch</span>(key)&#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">258</span>: <span class="comment">//printw(&quot;down\n&quot;);</span></span><br><span class="line">				  down();</span><br><span class="line">				  <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">259</span>: <span class="comment">//printw(&quot;up\n&quot;);</span></span><br><span class="line">				  up();</span><br><span class="line">				  <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">260</span>: <span class="comment">//printw(&quot;left\n&quot;);</span></span><br><span class="line">				  left();</span><br><span class="line">				  <span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="number">261</span>: <span class="comment">//printw(&quot;right\n&quot;);</span></span><br><span class="line">				  right();</span><br><span class="line">				  <span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(key == <span class="number">3</span>)&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(snake_wx.head-&gt;coordinate.x == <span class="number">0</span> || snake_wx.head-&gt;coordinate.y == <span class="number">0</span> || snake_wx.head-&gt;coordinate.x == <span class="number">21</span> || snake_wx.head-&gt;coordinate.y == <span class="number">48</span>)&#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span>(snake_wx.head-&gt;coordinate.x == snake_food.x &amp;&amp; snake_wx.head-&gt;coordinate.y == snake_food.y)&#123;</span><br><span class="line">			Creat_food();</span><br><span class="line">			Eat_food();</span><br><span class="line">		&#125;</span><br><span class="line">		refresh();</span><br><span class="line">		usleep(<span class="number">120000</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
+          <h2 id="四驱车直流马达的使用"><a href="#四驱车直流马达的使用" class="headerlink" title="四驱车直流马达的使用"></a>四驱车直流马达的使用</h2><p>这里我使用的单片机是arduino系列的Wemos D1，它跟带有wifi模块的ESP8266是等同的，具体的模块我也会在之后的文章里继续介绍。之前我在网上看到有教程使用arduino以及它的扩展板AFMotor来驱动直流马达，但是我觉得这样的性价比明显低了，其实可以通过L9110直流电机驱动板来完成，再配合Wemos，也可以做出通过web Sever控制的wifi智能避障小车，下面我先介绍直流马达是如何驱动的。</p>
+<h3 id="L9110直流电机驱动板"><a href="#L9110直流电机驱动板" class="headerlink" title="L9110直流电机驱动板"></a>L9110直流电机驱动板</h3><p>  <img src="/images/blog_images/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/6933743775224.png" alt="驱动板"><br>其实这块板子有一份配置的说明文档，但是我拿到这份说明文档是有错误的，或者可能是跟我入手的这块驱动板不符。它的输入I口有六个，分别是B-1A、B-2A、GND、VCC、A-1A、A-1B，然后VCC是接2.5V-12V电源正极，GND是接电源地，B-1A、B-2A、A-1A、A-1B分别接单片机的IO口，还有O口四个，这四个口没有分编号，而且都顶着一顶绿色帽子，分为两个一组写着MotorA和MotorB，它的接法是将线插到板面的另一侧，然后拧紧上面的螺丝。</p>
+<p>根据说明文档<img src="/images/blog_images/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/20200724162611179.png" alt="文档说明"><br>这里我怀疑说明文档出错了，因为不可能一下子给一个端口配置高电平又低电平，所以我就猜测，一个是IA1-1，IA1-2，一个是IB2-1，一个IB2-2，但是输入端口并没有IA1和IB2这些接角，所以与之对应的可能是上面提到的A-1A、A-1B，B-1A、B-2A。然后配置完后，输出端口OA1 OB1电机正转，刚开始这里我也不太明白，因为按理说输入端与输出端应该是一一对应的，左边I对应左边O，右边I对应右边O，不太可能左边的O与右边的O口，经过我的调试我发现，确实是跟我想的一样，即接到相邻的两个绿端子，如图所示。（注意：是相邻的两个绿端子）<br><img src="/images/blog_images/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/20200724184558880.png" alt="图片描述"></p>
+<h3 id="直流马达电机"><a href="#直流马达电机" class="headerlink" title="直流马达电机"></a>直流马达电机</h3><p><img src="/images/blog_images/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/20200724182532757.png" alt="马达电机"><br>直流马达没有导线，这里需要用到杜邦线来连接，具体做法可以去百度查看（挺简单的，主要靠动手能力），接完之后把杜邦线另一端接到L9110的绿端子就可以了这里有个问题要说明的是，因为刚开始接完电机动了，但是转轴并不会动，所以我就把电机外壳拆了，发现电机的轴与与齿轮接触不到，之后我把电机顶上去，接触到转轴，就能运转了</p>
 
       
     </div>
@@ -415,67 +476,6 @@
 <blockquote>
 <p>Wemos通过网页控制万物的基础篇（控制舵机，当然还可以稍微改动，可以控制LED灯，蜂鸣器等），目前在思考控制智能小车的方案，希望可以很快分享出来。</p>
 </blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/05/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/myicon.jpg">
-      <meta itemprop="name" content="LinWenXin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog of WenXinLin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/09/05/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">四驱车直流电机驱动</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-09-05 17:34:30" itemprop="dateCreated datePublished" datetime="2023-09-05T17:34:30+08:00">2023-09-05</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="四驱车直流马达的使用"><a href="#四驱车直流马达的使用" class="headerlink" title="四驱车直流马达的使用"></a>四驱车直流马达的使用</h2><p>这里我使用的单片机是arduino系列的Wemos D1，它跟带有wifi模块的ESP8266是等同的，具体的模块我也会在之后的文章里继续介绍。之前我在网上看到有教程使用arduino以及它的扩展板AFMotor来驱动直流马达，但是我觉得这样的性价比明显低了，其实可以通过L9110直流电机驱动板来完成，再配合Wemos，也可以做出通过web Sever控制的wifi智能避障小车，下面我先介绍直流马达是如何驱动的。</p>
-<h3 id="L9110直流电机驱动板"><a href="#L9110直流电机驱动板" class="headerlink" title="L9110直流电机驱动板"></a>L9110直流电机驱动板</h3><p>  <img src="/images/blog_images/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/6933743775224.png" alt="在这里插入图片描述"><br>其实这块板子有一份配置的说明文档，但是我拿到这份说明文档是有错误的，或者可能是跟我入手的这块驱动板不符。它的输入I口有六个，分别是B-1A、B-2A、GND、VCC、A-1A、A-1B，然后VCC是接2.5V-12V电源正极，GND是接电源地，B-1A、B-2A、A-1A、A-1B分别接单片机的IO口，还有O口四个，这四个口没有分编号，而且都顶着一顶绿色帽子，分为两个一组写着MotorA和MotorB，它的接法是将线插到板面的另一侧，然后拧紧上面的螺丝。</p>
-<p>根据说明文档<img src="/images/blog_images/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/20200724162611179.png" alt="在这里插入图片描述"><br>这里我怀疑说明文档出错了，因为不可能一下子给一个端口配置高电平又低电平，所以我就猜测，一个是IA1-1，IA1-2，一个是IB2-1，一个IB2-2，但是输入端口并没有IA1和IB2这些接角，所以与之对应的可能是上面提到的A-1A、A-1B，B-1A、B-2A。然后配置完后，输出端口OA1 OB1电机正转，刚开始这里我也不太明白，因为按理说输入端与输出端应该是一一对应的，左边I对应左边O，右边I对应右边O，不太可能左边的O与右边的O口，经过我的调试我发现，确实是跟我想的一样，即接到相邻的两个绿端子，如图所示。（注意：是相邻的两个绿端子）<br><img src="/images/blog_images/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/20200724184558880.png" alt="在这里插入图片描述"></p>
-<h3 id="直流马达电机"><a href="#直流马达电机" class="headerlink" title="直流马达电机"></a>直流马达电机</h3><p><img src="/images/blog_images/%E7%94%B5%E6%9C%BA%E4%BB%8B%E7%BB%8D/20200724182532757.png" alt="在这里插入图片描述"><br>直流马达没有导线，这里需要用到杜邦线来连接，具体做法可以去百度查看（挺简单的，主要靠动手能力），接完之后把杜邦线另一端接到L9110的绿端子就可以了这里有个问题要说明的是，因为刚开始接完电机动了，但是转轴并不会动，所以我就把电机外壳拆了，发现电机的轴与与齿轮接触不到，之后我把电机顶上去，接触到转轴，就能运转了</p>
 
       
     </div>
