@@ -141,6 +141,153 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/23/%E5%B7%A5%E5%85%B7%E9%93%BE%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myicon.jpg">
+      <meta itemprop="name" content="LinWenXin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of WenXinLin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/23/%E5%B7%A5%E5%85%B7%E9%93%BE%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">Linux安装arm-linux交叉编译工具链</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-23 19:56:11" itemprop="dateCreated datePublished" datetime="2023-10-23T19:56:11+08:00">2023-10-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/16Ihe11JT6T5wts1FzEtzuQ">https://pan.baidu.com/s/16Ihe11JT6T5wts1FzEtzuQ</a><br>提取码：kplh</p>
+</blockquote>
+<ol>
+<li><p>下载编译工具链，工具链的包我已经放在了百度云盘，具体链接如上，或者可到linaro的官方网站自行下载<a target="_blank" rel="noopener" href="https://releases.linaro.org/components/toolchain/binaries/">https://releases.linaro.org/components/toolchain/binaries/</a></p>
+</li>
+<li><p>将工具包上传到Linux系统，这里可以通过ftp服务也可以通过安装VMWare tools直接拉拽</p>
+</li>
+<li><p>将工具链包拷贝到系统目录下，我安装时是拷贝到 &#x2F;usr&#x2F;local&#x2F;arm目录下，以下也是以此目录为例</p>
+</li>
+<li><p>拷贝到之后通过命令 sudo tar -vxf  gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf.tar进行解压</p>
+</li>
+<li><p>解压完成后，在&#x2F;usr&#x2F;local&#x2F;arm会看到这样的一个目录<img src="/images/blog_images/%E5%B7%A5%E5%85%B7%E9%93%BE/20200818151609868.png" alt="在这里插入图片描述"></p>
+</li>
+<li><p>到这里安装就快完成了，还需到&#x2F;etc&#x2F;profile文件里，添加如下命令设置环境变量：</p>
+<pre><code>   export PATH=$PATH:/usr/local/arm/gcc/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf/bin
+</code></pre>
+</li>
+<li><p>最后重启系统，即可</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/23/ros%E6%91%84%E5%83%8F%E5%A4%B4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myicon.jpg">
+      <meta itemprop="name" content="LinWenXin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of WenXinLin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/10/23/ros%E6%91%84%E5%83%8F%E5%A4%B4/" class="post-title-link" itemprop="url">Linux-ros安装以及驱动摄像头</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2023-10-23 19:47:31" itemprop="dateCreated datePublished" datetime="2023-10-23T19:47:31+08:00">2023-10-23</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="Linux-ros安装以及驱动摄像头"><a href="#Linux-ros安装以及驱动摄像头" class="headerlink" title="Linux-ros安装以及驱动摄像头"></a>Linux-ros安装以及驱动摄像头</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>. sudo apt<span class="literal">-get</span> install ros<span class="literal">-melodic-usb-cam</span>  //melodic是我Linux下ros的版本号，这里根据你安装的ros版本写成对应的</span><br><span class="line"><span class="number">2</span>. roslaunch usb_cam usb_cam<span class="literal">-text</span>.launch</span><br><span class="line"><span class="number">3</span>. rqt_image_view</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>遇到的问题： </p>
+<ol>
+<li>cannot identity ‘&#x2F;dev&#x2F;vedio0’, 如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811173924155.png" alt="在这里插入图片描述"></li>
+</ol>
+<blockquote>
+<p>原因：没有将摄像头链接到虚拟机Linux，这里只要在虚拟机菜单栏找个虚拟机-&gt;可移动设备，将摄像头链接到虚拟机即可，比如：我的电脑的摄像头名称是USB2.0 VGA UVC WebCam，找到之后点击连接到主机，若没有显示摄像头名称则说明你的电脑摄像头不兼容Linux系统，关于如何查看，可打开电脑设备管理器，在照相机的管理列表下则是你电脑的摄像头名称，如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174527797.png" alt="在这里插入图片描述"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174815599.png" alt="在这里插入图片描述"><br>2. 进程被杀，摄像头灯光亮一下就灭<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175254153.png" alt="在这里插入图片描述"><br>原因：配置太低了，可以到虚拟机-&gt;设置改一下USB控制器的兼容性，改到3.0就可以<img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175521614.png" alt="在这里插入图片描述"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175546261.png" alt="在这里插入图片描述"></p>
+</blockquote>
+<p>做到这里，虚拟机下的Linux-ros的摄像头驱动应该就可以跑起来了</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>. roscore //这里第一次跑摄像头驱动最好跑一下master控制节点</span><br><span class="line"><span class="number">2</span>. roslaunch usb_cam usb_cam<span class="literal">-test</span>.launch </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811181320598.png" alt="在这里插入图片描述"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/07/%E5%9F%BA%E4%BA%8Encurses%E7%9A%84%E8%B4%AA%E5%90%83%E8%9B%87/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,1022 +415,6 @@
 <blockquote>
 <p>Wemos通过网页控制万物的基础篇（控制舵机，当然还可以稍微改动，可以控制LED灯，蜂鸣器等），目前在思考控制智能小车的方案，希望可以很快分享出来。</p>
 </blockquote>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/07/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/myicon.jpg">
-      <meta itemprop="name" content="LinWenXin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog of WenXinLin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/07/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="post-title-link" itemprop="url">内存管理(嵌入式系统与应用)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-10-07 14:55:51" itemprop="dateCreated datePublished" datetime="2023-10-07T14:55:51+08:00">2023-10-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="内存管理概述"><a href="#内存管理概述" class="headerlink" title="内存管理概述"></a>内存管理概述</h2><h3 id="内存管理机制"><a href="#内存管理机制" class="headerlink" title="内存管理机制"></a>内存管理机制</h3><p>定义：把<strong>物理的存储</strong>资源用一定的规则和手段管理起来，以供操作系统和应用程序使用</p>
-<p>主要操作：内存块的分配和回收</p>
-<p>评价指标：内存利用率、内存块分配和回收的效率、时间确定性</p>
-<p>两种分配方法：静态分配和动态分配</p>
-<ul>
-<li>静态分配简单，但必须事先预知分配的数量（代码大小、数据大小），且缺乏灵活性</li>
-<li>动态分配灵活，但会消耗额外的时间和内存开销，可能产生内存碎片</li>
-</ul>
-<h3 id="通用内存分配"><a href="#通用内存分配" class="headerlink" title="通用内存分配"></a>通用内存分配</h3><p>内存空间划分：代码区，静态数据区和动态数据区</p>
-<p>静态分配：发生在编译和链接时，全局变量和静态变量；开始运行就分配，运行结束才释放。</p>
-<p>动态分配：发生在程序调入和执行时，局部变量和返回值等；需要时分配，使用完就可以释放。</p>
-<ul>
-<li>栈：一种线性结构，后进先出，存放函数的参数和返回值、局部变量……</li>
-<li>堆：一种链式结构，用于调用malloc和free分配&#x2F;释放的内存。如果调用malloc分配，但缺少调用free释放，会造成内存泄漏。</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 栈内存分配</span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">AllocStrFromStack</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> pstr[<span class="number">100</span>];</span><br><span class="line">    <span class="keyword">return</span> pstr; <span class="comment">//退出释放</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 堆内存分配</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">char</span> *str; <span class="comment">// 局部变量</span></span><br><span class="line">	<span class="keyword">if</span> ((str = <span class="built_in">malloc</span>(<span class="number">15</span>)) == <span class="literal">NULL</span>) <span class="comment">// 动态分配</span></span><br><span class="line">	&#123;</span><br><span class="line">  		<span class="built_in">printf</span>(<span class="string">&quot;Not enough memory to allocate buffer\n&quot;</span>);</span><br><span class="line">  		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line"> 	&#125;</span><br><span class="line"> 	<span class="comment">// 内部处理</span></span><br><span class="line"> 	<span class="built_in">strcpy</span>(str,<span class="string">&quot;hello world&quot;</span>); <span class="comment">//初始化</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;String is %s\n&quot;</span>,str);</span><br><span class="line"> 	<span class="built_in">free</span>(str); <span class="comment">// 释放：指针记录的内容还在</span></span><br><span class="line">	str = <span class="literal">NULL</span>; <span class="comment">// 清楚为空指针，不可用</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>使用malloc()和free()的内存分配特点：</p>
-<ul>
-<li>需要编译器库提供malloc()和free()函数</li>
-<li>执行时间不具有确定性</li>
-<li>可能明显增大RTOS内核的代码大小</li>
-</ul>
-<p>嵌入式实时内核内存管理要求：</p>
-<ul>
-<li>实时性<ul>
-<li>内存分配尽可能快，且具有<strong>确定</strong>性。</li>
-</ul>
-</li>
-<li>可靠性<ul>
-<li>内存分配请求必须得到<strong>满足</strong>，否则有严重后果。例如飞机燃油系统的内存分配。</li>
-</ul>
-</li>
-<li>高效性<ul>
-<li>内存分配尽可能<strong>减少浪费</strong></li>
-</ul>
-</li>
-</ul>
-<p>实时内核所采用的内存管理方式与<strong>应用领域</strong>和<strong>硬件环境</strong>密切相关：</p>
-<ul>
-<li>在强实时应用领域，内存管理方法就比较简单，甚至不提供内存管理功能</li>
-<li>一些实时性要求不高，可靠性要求比较高，且系统比较复杂的应用在内存管理上就相对复杂些，可能需要实现对操作系统或是任务的保护</li>
-</ul>
-<h3 id="嵌入式实时操作系统在内存管理方面特点"><a href="#嵌入式实时操作系统在内存管理方面特点" class="headerlink" title="嵌入式实时操作系统在内存管理方面特点"></a>嵌入式实时操作系统在内存管理方面特点</h3><ul>
-<li>快速而确定的内存管理<ul>
-<li><strong>不使用内存管理</strong>：最快速和最确定的内存管理方式，适用于那些小型的嵌入式系统，系统中的任务比较少，且数量固定</li>
-<li>通常的操作系统都至少具有<strong>基本的内存管理方法</strong>：提供内存分配与释放的系统调用</li>
-</ul>
-</li>
-<li>不使用虚拟存储技术<ul>
-<li>虚拟内存技术：为用户提供一种不受物理存储器结构和容量限制的存储管理技术，每个任务从内存中获得一定数量的页面，并且当前不访问的页面将被置换出去，为需要页面的其他任务腾出空间</li>
-<li>置换是一种<strong>具有不确定性</strong>的操作：当任务需要使用当前被置换出去的页面中的代码和数据时，将不得不从磁盘中获取页面，而在内存中另外的页面又可能不得不需要先被置换出去</li>
-<li>在嵌入式实时操作系统中一般不使用虚拟存储技术，以<strong>避免页面置换所带来的开销</strong></li>
-</ul>
-</li>
-<li>内存保护<ul>
-<li>平面内存模式flat mode<ul>
-<li>应用程序和系统程序能够对<strong>整个内存空间</strong>进行访问</li>
-<li>平面内存模式比较简单，易于管理，性能也比较高</li>
-<li>适合于程序简单、代码量小和实时性要求比较高的领域</li>
-</ul>
-</li>
-<li>内存保护<ul>
-<li>应用比较复杂、程序量比较大的情况</li>
-<li>防止应用程序破坏操作系统或是其他应用程序的代码和数据</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="实时内核内存管理机制"><a href="#实时内核内存管理机制" class="headerlink" title="实时内核内存管理机制"></a>实时内核内存管理机制</h2><p>常用内存管理方式：</p>
-<ul>
-<li>固定大小存储区<ul>
-<li>在指定边界的一块地址连续的内存空间中，实现固定大小内存块的分配。</li>
-</ul>
-</li>
-<li>可变大小存储区<ul>
-<li>在指定边界的一块地址连续的内存空间中，实现可变大小内存块的分配。</li>
-</ul>
-</li>
-</ul>
-<p>应用根据需要从固定大小存储区或者可变大小存储区中获得一块内存空间，用完后将该内存空间释放回相应的存储区。</p>
-<h3 id="固定大小存储区管理"><a href="#固定大小存储区管理" class="headerlink" title="固定大小存储区管理"></a>固定大小存储区管理</h3><p>可供使用的一段连续的内存空间被称为是一个分区， 分区由大小固定的内存块构成，且分区的大小是内存块大小的整数倍数<br>一个大小为512字节的分区，内存块为128个字节的分区</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">     PartitionID           ID;                       <span class="comment">/*分区的ID,ID表示分区的标识*/</span></span><br><span class="line">     PartitionName         Name;                     <span class="comment">/*分区的名字*/</span></span><br><span class="line">     <span class="type">void</span>                 *starting_address;         <span class="comment">/*分区的起始地址*/</span></span><br><span class="line">     <span class="type">int</span>                   length;                   <span class="comment">/*分区的长度,分区的存储单元的数量*/</span></span><br><span class="line">     <span class="type">int</span>                   buffer_size;              <span class="comment">/*内存块的大小*/</span></span><br><span class="line">     PartitionAttribute    attribute;                <span class="comment">/*属性*/</span></span><br><span class="line">     <span class="type">int</span>                   number_of_used_blocks;    <span class="comment">/*剩余内存块数*/</span></span><br><span class="line">     MemoryChain           memory;                   <span class="comment">/*内存块链,一个指针,指向分区中由空闲内存块组成的双向空闲内存块链表的头结点*/</span></span><br><span class="line">&#125;   Partition;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E7%A9%BA%E9%97%B2%E5%86%85%E5%AD%98%E5%9D%97%E9%93%BE%E8%A1%A8.png" alt="空闲内存块链表"></p>
-<p>分区的操作 </p>
-<ul>
-<li>创建分区</li>
-<li>删除分区</li>
-<li>从分区得到内存块</li>
-<li>把内存块释放到分区</li>
-<li>获取分区ID</li>
-<li>获取当前创建的分区的数量</li>
-<li>获取当前所有分区的ID</li>
-<li>获取分区信息</li>
-</ul>
-<p>如果内存块处于<strong>空闲状态</strong>，内存块中的几个字节将作为控制结构，用来存放用于双向链接的前向指针和后向指针<br>在<strong>使用内存块</strong>时，内存块中原有的控制信息不再有效，其中的所有存储空间都可以被使用<br>固定大小存储区管理的<strong>系统开销</strong>对用户的影响为零，由于内存块的大小固定，不存在<strong>外碎片</strong>的问题<br>但存在<strong>内碎片</strong>的问题</p>
-<h3 id="可变大小存储区管理"><a href="#可变大小存储区管理" class="headerlink" title="可变大小存储区管理"></a>可变大小存储区管理</h3><p>一种基于堆的管理方式（与传统堆操作不同）</p>
-<ul>
-<li>堆为一段连续的、大小可配置的内存空间，用来提供可变内存块的分配。</li>
-<li>可变内存块称为段，最小分配单位称为页，即段的大小是页的大小的整数倍。</li>
-<li>如果申请段的大小不是页的倍数，实时内核将会对段的大小进行调整，调整为页的倍数。<br>(例如，从页大小为256个字节的堆中分配一个大小为350字节的段，实时内核实际分配的段大小为512个字节)</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">      HeapID            ID;             	  <span class="comment">/*堆的ID*/</span></span><br><span class="line">      HeadName	        name;          	          <span class="comment">/*堆的名字*/</span></span><br><span class="line">      TaskQueue	        waitQueue; 	          <span class="comment">/*任务等待队列,如果任务从堆中申请段不能得到满足，将被阻塞在堆的等待队列上*/</span></span><br><span class="line">      <span class="type">void</span>              *starting_address;	  <span class="comment">/*内存空间起始地址*/</span></span><br><span class="line">      <span class="type">int</span>               length;		          <span class="comment">/*内存空间长度/字节,堆的大小*/</span></span><br><span class="line">      <span class="type">int</span>               page_size;	          <span class="comment">/*页长度（字节）*/</span></span><br><span class="line">      <span class="type">int</span>               maximum_segment_size;     <span class="comment">/*最大可用段大小*/</span></span><br><span class="line">      RegionAttribute   attribute;                <span class="comment">/*堆的属性*/</span></span><br><span class="line">      <span class="type">int</span>               number_of_used_blocks;    <span class="comment">/*分配的块数,已分配使用的内存块的数量*/</span></span><br><span class="line">      HeapMemoryChain   memory;                   <span class="comment">/*堆头控制结构,空闲段链表*/</span></span><br><span class="line">&#125;Heap; </span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>可变大小存储区中的空闲段通过双向链表链接起来，形成一个空闲段链<ul>
-<li>在创建堆时，只有一个空闲段，其大小为整个存储区的大小减去控制结构的内存开销</li>
-<li>从存储区中分配段时，可依据首次适应算法，查看空闲链中是否存在合适的段</li>
-<li>当把段释放回存储区时，该段将被挂在空闲段链的链尾<ul>
-<li>如果空闲链中有与该段相邻的段，则将其合并成一个更大的空闲段</li>
-<li>由于对申请的内存的大小作了一些限制，避免了内存碎片的产生</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E5%A0%86%E7%9A%84%E7%A9%BA%E9%97%B2%E6%AE%B5%E9%93%BE.png" alt="堆的空闲段链"></p>
-<p>在段的控制块中设置了一个标志位，表示段被使用的情况：1表示该段正被使用，0表示该段空闲。</p>
-<p>在固定大小存储区管理方式中，只有在空闲状态下，内存块才拥有控制信息。在可变大小存储区管理方式中，无论段空闲或是正在被使用，段的控制结构都始终存在。 </p>
-<p>堆的操作 </p>
-<ul>
-<li>创建堆</li>
-<li>从堆中得到内存块</li>
-<li>释放内存块到堆中</li>
-<li>扩展堆</li>
-<li>获得已分配内存块的实际可用空间大小</li>
-<li>删除堆</li>
-<li>获得堆的ID</li>
-<li>获得在堆上等待的任务数量</li>
-<li>获得等待任务的ID列表</li>
-<li>获得堆的数量</li>
-<li>获得堆列表</li>
-<li>获得堆信息</li>
-</ul>
-<h3 id="Memory-management-in-uC-OS-II"><a href="#Memory-management-in-uC-OS-II" class="headerlink" title="Memory management in uC&#x2F;OS-II"></a>Memory management in uC&#x2F;OS-II</h3><p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/fixed-sized_memory_blocks_from_a_partition.png" alt="fixed-sized memory blocks from a partition"></p>
-<p>内存分区，多内存分区</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* MEMORY CONTROL BLOCK   MCB    */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> </span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="comment">/* Pointer to beginning of memory partition*/</span></span><br><span class="line">    <span class="type">void</span>   *OSMemAddr;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Pointer to list of free memory blocks   */</span></span><br><span class="line">    <span class="type">void</span>   *OSMemFreeList;    </span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Size (in bytes) of each block of memory */</span>         </span><br><span class="line">    INT32U  OSMemBlkSize; </span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Total number of blocks in this partition*/</span></span><br><span class="line">    INT32U  OSMemNBlks;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">/* Number of memory blocks remaining in this partition*/</span></span><br><span class="line">    INT32U  OSMemNFree;                </span><br><span class="line">&#125; OS_MEM;</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/List_of_free_memory_control_blocks.png" alt="List of free memory control blocks"></p>
-<p><em>List of free memory control blocks created by</em> <em>OS_MemInit</em></p>
-<p>Each memory control block can be used to manage a partition</p>
-<p>每个内存控制块可用于管理一个分区</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">OS_MemInit</span> <span class="params">(<span class="type">void</span>)</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>功能：初始化内存控制块MCB链，形成空闲MCB链表</li>
-<li>所在文件os_mem.c</li>
-</ul>
-<p>创建分区              OSMemCreate</p>
-<p>从分区获得内存块      OSMemGet</p>
-<p>释放内存块到指定分区  OSMemPut</p>
-<p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/Partition_created_by_OSMemCreate.png" alt="Partition created by OSMemCreate"></p>
-<p>Partition after OSMemGet</p>
-<ol>
-<li>链首头指向pblk</li>
-<li>OSmemFreeList 指向下一块头</li>
-</ol>
-<p>Partition after OSMemPut</p>
-<ol>
-<li>链首头指向下一块的头</li>
-<li>OSmemFreeList 指向链首</li>
-</ol>
-<h2 id="内存保护"><a href="#内存保护" class="headerlink" title="内存保护"></a>内存保护</h2><h3 id="保护内容"><a href="#保护内容" class="headerlink" title="保护内容"></a>保护内容</h3><p>防止地址越界：每个应用程序都有自己独立的地址空间，当应用程序要访问某个内存单元时，由硬件检查该地址是否在限定的地址空间之内，只有在限定地址空间之内的内存单元访问才是合法的，否则需要进行<strong>地址越界</strong>处理</p>
-<p>防止操作越权：对于允许多个应用程序共享的存储区域，每个应用程序都有自己的访问权限，如果一个应用程序对共享区域的访问违反了权限规定，则进行<strong>操作越权</strong>处理</p>
-<h3 id="保护实现"><a href="#保护实现" class="headerlink" title="保护实现"></a>保护实现</h3><p>内存保护可通过硬件提供的MMU（memory management unit）来实现</p>
-<p>早期的嵌入式操作系统大都没有采用MMU：</p>
-<ul>
-<li>一方面是出于对硬件成本的考虑</li>
-<li>另一方面是出于实时性的考虑</li>
-</ul>
-<p>嵌入式系统发展到现在，硬件成本越来越低，MMU所带来的成本因素基本上可以不用考虑</p>
-<p>原来的嵌入式CPU的速度较慢，采用MMU通常会造成对时间性能的不满足，而现在CPU的速度也越来越快，并且采用新技术后，已经将MMU所带来的时间代价降低到比较低的程度</p>
-<p>目前，大多数处理器都集成了MMU</p>
-<ul>
-<li>大幅度<strong>降低</strong>那些通过在处理器外部添加MMU模块的处理方式所存在的<strong>内存访问延迟</strong></li>
-<li>MMU现在大都被设计作为处理器内部指令执行<strong>流水线的一部分</strong>，使得使用MMU不会降低系统性能，相反，如果系统软件不使用MMU，还会导致处理器的性能降低</li>
-<li>在某些情况下，不使能MMU，跳过处理器的相应流水线，可能导致处理器的性能降低80%左右</li>
-</ul>
-<p>嵌入式CPU具有MMU的功能已经是一种必要的趋势。</p>
-<p>由于采用MMU后对应用的运行模式甚至开发模式都会有一些影响，大量嵌入式操作系统都没有使用MMU</p>
-<p>对于安全性、可靠性要求高的应用来讲，如果不采用MMU，则几乎不可能达到应用的要求</p>
-<ul>
-<li>如果没有MMU的功能，将无法防止程序的无意破坏，无法截获各种非法的访问异常，当然更不可能防止应用程序的蓄意破坏了</li>
-<li>采用MMU后，便于发现更多的潜在问题，并且也便于问题的定位<ul>
-<li>未采用MMU时，内存模式一般都是平面模式，应用可以任意访问任何内存区域、任何硬件设备，程序中出现非法访问时，开发人员是无从知晓的，也非常难于定位</li>
-</ul>
-</li>
-</ul>
-<p>MMU通常具有如下功能 </p>
-<ul>
-<li><strong>内存映射</strong></li>
-<li>检查逻辑地址是否在<strong>限定的地址范围内</strong>，防止页面地址越界</li>
-<li>检查对内存页面的访问是否违背<strong>特权信息</strong>，防止越权操作内存页面</li>
-<li>在必要的时候（页面地址越界或是页面操作越权）产生<strong>异常</strong></li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line">程序应用 --&gt;|逻辑地址|MMU</span><br><span class="line">MMU --&gt;|物理地址|物理内存</span><br></pre></td></tr></table></figure>
-
-<p>大多数处理器的典型页面大小为4K字节，有些处理器也可能使用大于4K字节的页面，但<strong>页面大小总是2的幂</strong>，以对发生在MMU中的地址映射行为流水线化</p>
-<p>当页放置到物理内存时，页面将放置到<strong>页框架</strong>（page frame）中</p>
-<ul>
-<li>页框架是物理内存的一部分，具有与页面同样的大小，且开始地址为页面大小的整数倍</li>
-<li>MMU包含着能够把逻辑地址映射为物理地址的表，称为<strong>页表</strong><ul>
-<li><strong>操作系统</strong>能够在需要的时候对这种映射关系进行改变<ul>
-<li>应用程序对内存的需求发生变化或是添加或删除应用程序的时候</li>
-<li>在应用程序中的任务发生上下文切换时</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E5%9F%BA%E4%BA%8E%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E8%BF%87%E7%A8%8B.png" alt="基于页表的内存映射过程"></p>
-<p>每个内存页还具有一些特权和状态信息</p>
-<ul>
-<li>MMU提供二进制位来标识每个页面的特权或状态信息。这些二进制位用来确定页面中的内容是否：<ul>
-<li>可被处理器指令所使用（执行特权） </li>
-<li>可写（写特权） </li>
-<li>可读（读特权） </li>
-<li>已被回写（脏位） - 与CACHE配合</li>
-<li>当前在物理内存中（有效位）-  虚拟存储</li>
-</ul>
-</li>
-</ul>
-<p>在操作系统的支持下，MMU还提供<strong>虚拟存储</strong>功能，即在任务所需要的内存空间超过能够从系统中获得的物理内存空间的情况下，也能够得到正常运行。</p>
-<ul>
-<li>当需要的页面被添加到逻辑地址空间时，任务对内存页面的合法访问，将自动访问到物理内存</li>
-<li>页面当前不在物理内存中时，将导致页面故障异常，然后操作系统负责从后援存储器（如硬盘或是FLASH存储设备）中获取需要的页面，并从产生<strong>页面故障</strong>的机器指令处重新执行</li>
-</ul>
-<p>MMU通常具有如下不同功能程度的使用方式 </p>
-<ul>
-<li>0级，内存的平面使用模式<ul>
-<li>没有使用MMU，应用程序和系统程序能够对整个内存空间进行访问</li>
-<li>采用该模式的系统比较简单、性能也比较高，适合于程序简单、代码量小和实时性要求比较高的领域</li>
-<li>大多数<strong>传统的嵌入式操作系统</strong>都采用该模式</li>
-</ul>
-</li>
-<li>1级，处理具有MMU和内存缓存的嵌入式处理器<ul>
-<li>通常只是打开MMU，并通过创建一个域（domain，为内存保护的基本单位，每个域对应一个页表）的方式来使用内存，并对每次内存访问执行一些必要的地址转换操作</li>
-<li>该模式仍然只是拥有MMU打开特性的平面内存模式</li>
-</ul>
-</li>
-<li>2级，内存保护模式 现代操作系统<ul>
-<li>MMU被打开，且创建了静态的域（应用程序的逻辑地址同应用程序在物理内存中的物理地址之间的映射关系在系统运行前就已经确定），以保护应用和操作系统在指针试图访问其他程序的地址空间时不会被非法操作</li>
-<li>通常使用消息传送机制实现数据在被MMU保护起来的各个域之间的移动</li>
-</ul>
-</li>
-<li>3级，虚拟内存使用模式<ul>
-<li>通过操作系统使用CPU提供的内存映射机制，内存页被动态地分配、释放或是重新分配</li>
-<li>从内存映射到基于磁盘的虚拟内存页的过程是透明的</li>
-</ul>
-</li>
-</ul>
-<p>区别</p>
-<ul>
-<li>0级模式为大多数传统嵌入式实时操作系统的使用模式，同1级模式一样，都是内存的平面使用模式，不能实现内存的保护功能</li>
-<li>2级模式是目前大多数嵌入式实时操作系统所采用的内存管理模式，既能实现内存保护功能，又能通过静态域的使用方式保证系统的实时特性</li>
-<li>3级模式适合于应用比较复杂、程序量比较大，并不要求实时性的应用领域</li>
-</ul>
-<p><img src="/images/blog_images/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/%E5%9F%BA%E4%BA%8E%E9%9D%99%E6%80%81%E5%9F%9F%E7%9A%84MMU%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F.png" alt="基于静态域的MMU使用方式"></p>
-<p>在这种一一对应的使用方式中，应用程序的逻辑地址同应用程序在物理内存中的物理地址相同，简化了内存管理的实现方式</p>
-<p>在嵌入式实时操作系统中，MMU通常被用来进行内存保护</p>
-<ul>
-<li>实现操作系统与应用程序的隔离</li>
-<li>应用程序和应用程序之间的隔离</li>
-<li>防止应用程序破坏操作系统的代码、数据以及应用程序对硬件的直接访问</li>
-<li>对于应用程序来讲，也可以防止别的应用程序对自己的非法入侵，从而破坏应用程序自身的运行</li>
-</ul>
-<p>在内存保护方面，MMU提供了以下措施 </p>
-<ul>
-<li>防止地址越界<ul>
-<li>通过限长寄存器检查逻辑地址，确保应用程序只能访问逻辑地址空间所对应的、限定的物理地址空间，MMU将在逻辑地址超越限长寄存器所限定的范围时产生异常</li>
-</ul>
-</li>
-<li>防止操作越权<ul>
-<li>根据内存页面的特权信息控制应用程序对内存页面的访问，如果对内存页面的访问违背了内存页面的特权信息，MMU将产生异常</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/07/%E6%96%87%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/myicon.jpg">
-      <meta itemprop="name" content="LinWenXin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog of WenXinLin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/10/07/%E6%96%87%E4%BB%B6/" class="post-title-link" itemprop="url">文件管理</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-10-07 14:18:28" itemprop="dateCreated datePublished" datetime="2023-10-07T14:18:28+08:00">2023-10-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="文件和文件系统"><a href="#文件和文件系统" class="headerlink" title="文件和文件系统"></a>文件和文件系统</h2><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><ol>
-<li>字段：基本数据单位，用于描述对象某种属性，每个字段都具有一个唯一值<ol>
-<li>字段具有长度和数据类型两个属性，长度分固定长度和可变长度</li>
-<li>一个字段若干子字段组成，符合字段。取值决于组成它的各个分字段的值</li>
-</ol>
-</li>
-<li>记录：是一组相关字段的集合，是应用程序可处理数据单位<ol>
-<li>记录长度：固定长度 可变长度</li>
-<li><strong>关键字</strong>是惟一能标识一个记录的数据项</li>
-</ol>
-</li>
-<li>文件：文件是若干相关记录的集合</li>
-</ol>
-<p>非结构数据库 MongoDB&#x2F;HDFS&#x2F;</p>
-<p>数据库：相关数据的集合，通常由若干数据库表格构成。还可以由一种或多种类型的文件组成</p>
-<h3 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h3><ul>
-<li>操作系统中的各类文件、管理文件的软件，以及管理文件所涉及到的数据结构等信息的集合</li>
-<li>少数文件系统从操作系统中分离出来，独立于操作系统存在，绝大多数操作系统都包含文件系统部分</li>
-</ul>
-<p>文件系统设计目标</p>
-<ul>
-<li>有效地组织管理文件<ul>
-<li>需要设计相应的管理数据结构来组织管理这些文件集，数据结构包括文件控制块、文件目录</li>
-<li>为加快访问速度，需要相应有一套的缓存管理机制</li>
-</ul>
-</li>
-<li>提供方便的用户接口<ul>
-<li>文件系统会提供若干访问文件系统的系统调用或系统命令 ，用户能够方便有效地使用文件系统提供的功能</li>
-</ul>
-</li>
-</ul>
-<p>文件系统模型</p>
-<p>用户（程序）–&gt;文件系统接口 –&gt; 对对象操作和管理的软件集合 –&gt;对象及其属性</p>
-<p>屏蔽底层数据的不同特点，HAL 硬件抽象层（Hardware Abstraction Layer）</p>
-<table>
-<thead>
-<tr>
-<th>文件系统实现模型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>文件系统接口</td>
-<td>命令、系统调用和图像窗口</td>
-</tr>
-<tr>
-<td>逻辑功能层</td>
-<td>访问存储介质的物理参数，形成响应的驱动命令，启动实施IO操作</td>
-</tr>
-<tr>
-<td>物理驱动层</td>
-<td>将逻辑功能层发下的命令转化为相应的驱动程序，完成文件物理存储设备的处理</td>
-</tr>
-</tbody></table>
-<ul>
-<li>对象及其属性 文件、文件目录、外部存储设备</li>
-<li>管理软件的集合 存储空间、目录、地址映射、共享保护</li>
-<li>文件系统接口 命令、系统调用</li>
-</ul>
-<p>文件系统与数据库管理系统区别与联系</p>
-<ol>
-<li>数据库管理系统中定义的各种数据结构对文件系统透明，文件系统只处理<strong>无结构、无格式</strong>的字节流<ul>
-<li>关系型数据库 非结构化数据库 NoSQL<ul>
-<li>SQL(结构化查询语言) </li>
-<li>BigData 大部分属于非关系型数据 非结构化<ul>
-<li>MongoDB HBase</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>文件系统给数据库管理提供“记录——流转换”接口</li>
-<li>无论文件系统是在操作系统中还是操作系统上，数据库管理系统DBMS过于依赖文件系统都需要构建在文件系统之上。这种数据库性能不高</li>
-</ul>
-</li>
-<li>为了提高数据库性能，数据库管理系统不依赖于操作系统提供的文件系统，独立的数据组织及存取机制，直接操纵文件存储设备，存储管理程序大多能提供一些低级接口</li>
-</ol>
-<p>相关概念</p>
-<ul>
-<li>文件<ul>
-<li>具有各种文件属性</li>
-</ul>
-</li>
-<li>记录<ul>
-<li>数据项的集合</li>
-</ul>
-</li>
-<li>数据项<ul>
-<li>基本数据项</li>
-<li>组合数据项</li>
-</ul>
-</li>
-</ul>
-<p>文件分类</p>
-<ul>
-<li>系统文件、用户文件、库文件</li>
-<li>源文件、目标文件、可执行文件</li>
-<li>只读、读写、执行</li>
-<li>普通文件、目录文件、特殊文件</li>
-</ul>
-<h3 id="一类特殊文件：设备文件"><a href="#一类特殊文件：设备文件" class="headerlink" title="一类特殊文件：设备文件"></a>一类特殊文件：设备文件</h3><ul>
-<li>由于对这类设备的I&#x2F;O和对文件的读写操作相同，因此也被看着文件，通常称为设备文件 .</li>
-<li>传输的信息均由一组顺序出现的字符序列组成，通常称为流设备 .</li>
-<li>通常对设备文件的命名不同于普通文件，需要特别规定</li>
-</ul>
-<p>文件的操作</p>
-<ul>
-<li>基本操作<ul>
-<li>创建、删除、读、写、截断、设置位置</li>
-<li>文件的“打开”与“关闭”</li>
-<li>其他操作</li>
-</ul>
-</li>
-</ul>
-<h2 id="文件的逻辑结构"><a href="#文件的逻辑结构" class="headerlink" title="文件的逻辑结构"></a>文件的逻辑结构</h2><ul>
-<li>逻辑结构<ul>
-<li>用户的观点<ul>
-<li>顺序</li>
-<li>索引</li>
-</ul>
-</li>
-<li>独立于物理特性</li>
-</ul>
-</li>
-<li>物理结构<ul>
-<li>系统的观点 硬件<ul>
-<li>空闲空间</li>
-<li>占用空间</li>
-</ul>
-</li>
-<li>具体物理组织形式</li>
-</ul>
-</li>
-<li>两种结构都会影响文件的检索速度</li>
-</ul>
-<h3 id="文件逻辑结构-star"><a href="#文件逻辑结构-star" class="headerlink" title="文件逻辑结构:star:"></a>文件逻辑结构:star:</h3><ul>
-<li>有结构文件<ul>
-<li>一系列记录组成</li>
-<li>记录可以是定长，也可以是变长</li>
-<li>记录的组织形式<ul>
-<li>顺序</li>
-<li>索引</li>
-<li>顺序索引</li>
-<li>哈希</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>无结构文件<ul>
-<li>流式文件</li>
-</ul>
-</li>
-<li>半结构<ul>
-<li>异步加载的网页</li>
-</ul>
-</li>
-</ul>
-<p>结构化文件与流文件的联系：硬件都块设备，所以需要进行流到块的转换</p>
-<h4 id="有结构文件的结构"><a href="#有结构文件的结构" class="headerlink" title="有结构文件的结构"></a>有结构文件的结构</h4><ul>
-<li>windows和unix这种系统则把结构化留给应用程序</li>
-<li>Windows和UNIX提供了低级文件系统 </li>
-<li>IBM MVS实现了一个结构化的文件系统</li>
-<li>Macintosh提供了一些记录－流转换功能，它可以被称为高级文件系统</li>
-</ul>
-<h5 id="顺序文件"><a href="#顺序文件" class="headerlink" title="顺序文件"></a>顺序文件</h5><h6 id="逻辑记录的排序"><a href="#逻辑记录的排序" class="headerlink" title="逻辑记录的排序"></a>逻辑记录的排序</h6><p>串结构，记录之间的顺序与关键字无关。通常方法由世界来决定，存入世界的先后排列。</p>
-<p>顺序结构，指文件中的所有记录按关键字(词)排列。可以按关键词的长短从小到大排序，也可以从大到小排序；或按其英文字母顺序排序</p>
-<h6 id="顺序文件-Sequential-File-读写操作"><a href="#顺序文件-Sequential-File-读写操作" class="headerlink" title="顺序文件(Sequential File)读写操作"></a>顺序文件(Sequential File)读写操作</h6><p><img src="/images/blog_images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/%E5%AE%9A%E9%95%BF%E5%92%8C%E5%8F%98%E9%95%BF%E8%AE%B0%E5%BD%95%E6%96%87%E4%BB%B6.png" alt="定长和变长记录文件"></p>
-<h6 id="顺序文件的优缺点"><a href="#顺序文件的优缺点" class="headerlink" title="顺序文件的优缺点"></a>顺序文件的优缺点</h6><p>顺序文件的最佳应用场合，是在对诸记录进行批量存取时， 即每次要读或写一大批记录</p>
-<p>在交互应用的场合，如果用户(程序)要求查找或修改单个记录，为此系统便要去逐个地查找诸记录。这时， 顺序文件所表现出来的性能就可能很差， 尤其是当文件较大时， 情况更为严重</p>
-<p>如果想增加或删除一个记录， 都比较困难。为了解决这一问题， 可以为顺序文件配置一个运行记录文件(Log File)或称为事务文件(Transaction File)， 把试图增加、 删除或修改的信息记录于其中， 规定每隔一定时间， 例如4小时，将运行记录文件与原来的主文件加以合并， 产生一个按关键字排序的新文件。</p>
-<h5 id="索引文件"><a href="#索引文件" class="headerlink" title="索引文件"></a>索引文件</h5><p>对于定长记录文件，如果要查找第i个记录， 可直接根据下式计算来获得第i个记录相对于第一个记录首址的地址<br>$$<br>A_i&#x3D;i\times L<br>$$<br>对于可变长度记录的文件，要查找其第i个记录时，须首先计算出该记录的首地址。为此，须顺序地查找每个记录，从中获得相应记录的长度Li，然后才能按下式计算出第i个记录的首址。假定在每个记录前用一个字节指明该记录的长度<br>$$<br>A_i&#x3D;\sum^{i-1}_{i&#x3D;0}{L_i+i}<br>$$<br><img src="/images/blog_images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%84%E7%BB%87.png" alt="索引文件的组织"></p>
-<h5 id="索引顺序"><a href="#索引顺序" class="headerlink" title="索引顺序"></a>索引顺序</h5><p>字典索引查找，按种类分类，按顺序查找</p>
-<p><img src="/images/blog_images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/%E7%B4%A2%E5%BC%95%E9%A1%BA%E5%BA%8F%E6%96%87%E4%BB%B6.png" alt="索引顺序文件"></p>
-<h5 id="直接文件或哈希文件"><a href="#直接文件或哈希文件" class="headerlink" title="直接文件或哈希文件"></a>直接文件或哈希文件</h5><p>直接文件 hash文件</p>
-<ul>
-<li>对于直接文件，则可根据给定的记录键值，直接获得指定记录的物理地址。</li>
-<li>记录键值本身就决定了记录的物理地址。这种由记录键值到记录物理地址的转换被称为键值转换(Key to address transformation)</li>
-</ul>
-<p><img src="/images/blog_images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/Hash%E6%96%87%E4%BB%B6%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84.png" alt="Hash文件的逻辑结构"></p>
-<h2 id="磁盘存储器的管理"><a href="#磁盘存储器的管理" class="headerlink" title="磁盘存储器的管理"></a>磁盘存储器的管理</h2><p>部分内容包含在内存管理章节里面</p>
-<ul>
-<li>文件分配 空间单位是磁盘块<ul>
-<li>连续分配方式</li>
-<li>离散分配方式</li>
-</ul>
-</li>
-<li>系统提供 分配 回收 的手段</li>
-<li>实现存储空闲空间分配<ul>
-<li>空闲分区表<ul>
-<li>号 起始 结束</li>
-</ul>
-</li>
-<li>空闲分区链<ul>
-<li>head 指向 起始点|长度|指针</li>
-</ul>
-</li>
-<li>位示图</li>
-<li>索引</li>
-</ul>
-</li>
-<li>分区分配 加快查找<ul>
-<li>最佳（有序，从小到大排列）</li>
-<li>最坏（有序，从小到大排列）</li>
-<li>首次适应(地址从低到高)</li>
-<li>循环首次适应(地址从低到高)</li>
-</ul>
-</li>
-</ul>
-<h3 id="文件的组织与实现"><a href="#文件的组织与实现" class="headerlink" title="文件的组织与实现"></a>文件的组织与实现</h3><p>文件分配表：描述了一个文件所获得物理块的详细信息，不同的操作系统赋予了该结构不同的名字</p>
-<p>预分配与动态分配：</p>
-<ul>
-<li>预分配方法要求文件创建时必须申明需要的最大空间<ul>
-<li>预分配方法属于静态分配技术，实现简单，易于维护</li>
-</ul>
-</li>
-<li>动态分配方法能满足文件存储空间的增长需要<ul>
-<li>动态分配方法实现较复杂，需要维护较多的数据结构</li>
-</ul>
-</li>
-</ul>
-<h4 id="分区"><a href="#分区" class="headerlink" title="分区"></a>分区</h4><p>外存空间被分成若干大小相同的数据块，将物理上连续的若干数据块组成一个文件分区，一个文件将能存储在某些连续的存储空间中</p>
-<p>分区大小</p>
-<ul>
-<li>分区越小，文件分配到的分区数目将会很多。用于管理分区的数据结构如表格等将会很大，增加管理复杂度，且单个文件的访问效率会降低</li>
-<li>分区越大，文件中的数据相邻存储的可能性越大，有利于提高文件访问性能，但若此时分区是固定大小的则可能造成空间的浪费</li>
-<li>可变大小的大分区和固定大小的小分区（以一个数据块为单位）是两种比较好的选择。这两种分区模式同时适合于预分配和动态分配方法</li>
-</ul>
-<p>分配算法</p>
-<ul>
-<li>首次适应</li>
-<li>下次适应</li>
-<li>最佳适应</li>
-</ul>
-<h3 id="文件存储空间的分配技术"><a href="#文件存储空间的分配技术" class="headerlink" title="文件存储空间的分配技术"></a>文件存储空间的分配技术</h3><p>都存在一张分配表：文件名 索引块号</p>
-<ul>
-<li><p>连续分配：物理结构</p>
-<ul>
-<li>修改空间分区表，compact紧凑</li>
-<li>不方便追加数据</li>
-</ul>
-</li>
-<li><p>链接分配</p>
-<ul>
-<li>data和指针，指针指向下一块的位置</li>
-<li>必须从头开始查找</li>
-</ul>
-</li>
-<li><p>索引分配</p>
-<ul>
-<li><p>文件存一列索引，按顺序索引块就可以得到整一块文件</p>
-</li>
-<li><p>可以进行多级索引，大文件存取</p>
-</li>
-<li><p>需要一个索引表</p>
-</li>
-</ul>
-</li>
-<li><p>基于可变分区的索引分配</p>
-<ul>
-<li>当文件较大时，索引块存储一张包含 起始块号 分区长度 的索引表</li>
-</ul>
-</li>
-</ul>
-<h4 id="连续分配"><a href="#连续分配" class="headerlink" title="连续分配"></a>连续分配</h4><p>连续分配以该方式管理的文件称为连续文件。为每个文件分配连续的存储空间 </p>
-<ul>
-<li>优点<ul>
-<li>简单、容易实现</li>
-<li>对于顺序文件，能很快检索文件中的数据块,连续读&#x2F;写多个数据块内容时，性能较好</li>
-</ul>
-</li>
-<li>缺点<ul>
-<li>它不利于文件尺寸的动态增长</li>
-<li>该分配方案可能会导致磁盘碎片，严重降低外存空间的利用率</li>
-</ul>
-</li>
-</ul>
-<h4 id="链接分配"><a href="#链接分配" class="headerlink" title="链接分配"></a>链接分配</h4><p>为文件分配非连续的若干数据块，数据块之间用指针相连，这种分配方式称为链接分配，以该方式管理的文件称为链接文件</p>
-<p>分配的优点:</p>
-<ul>
-<li>链接分配技术不要求文件存储到彼此相邻的数据块中，消除连续分配引起的碎片，提高了外存空间的利用率</li>
-<li>链接分配技术还能适应文件尺寸的动态增长</li>
-</ul>
-<p>缺点</p>
-<ul>
-<li>链接分配技术适合于文件的顺序存取，但对于随机存取却相当低效</li>
-<li>打破了局部性原理</li>
-</ul>
-<h4 id="索引分配"><a href="#索引分配" class="headerlink" title="索引分配"></a>索引分配</h4><ol>
-<li>利用专门的索引块存储索引信息</li>
-<li>一个数据块容纳不了一个文件的所有分区时，需要若干个索引结点进行存储，建立二级索引或多级索引</li>
-</ol>
-<p><img src="/images/blog_images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%9D%97%E5%88%86%E5%8C%BA%E7%9A%84%E7%B4%A2%E5%BC%95%E5%88%86%E9%85%8D.png" alt="基于数据块分区的索引分配"></p>
-<p>优点：</p>
-<ul>
-<li>索引分配方法支持文件的直接存取</li>
-<li>索引分配能满足文件的动态增长需要，只需要更新索引结点的内容，就可以把新增加的分区记录下来</li>
-<li>利用多级索引，可以支持大型文件的存取</li>
-</ul>
-<p>缺点：</p>
-<ul>
-<li>建立一个索引表占存储空间</li>
-</ul>
-<h4 id="基于可变分区的索引分配"><a href="#基于可变分区的索引分配" class="headerlink" title="基于可变分区的索引分配"></a>基于可变分区的索引分配</h4><p><img src="/images/blog_images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/%E5%9F%BA%E4%BA%8E%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E7%9A%84%E7%B4%A2%E5%BC%95%E5%88%86%E9%85%8D.png" alt="基于可变分区的索引分配"></p>
-<h5 id="多级索引"><a href="#多级索引" class="headerlink" title="多级索引"></a>多级索引</h5><p>索引节点：INode&#x3D;IndexNode，</p>
-<ul>
-<li>Inode<ul>
-<li>属性</li>
-<li>多个数据</li>
-<li>一级间接<ul>
-<li>指针 -&gt;多个数据</li>
-</ul>
-</li>
-<li>二级间接<ul>
-<li>指针-&gt;指针-&gt;多个数据</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p>例子：12个直接块，每个索引节点有一个一级、二级和三级间接指针。系统大小和磁盘扇区大小是8KB。如果磁盘指针32位，（8位表示物理磁盘，24位标识物理块）</p>
-<ol>
-<li><p>系统支持的最大文件大小是多少？</p>
-<p>直接块:12x8KB&#x3D;96KB</p>
-<p>一级间接 8K&#x2F;4 &#x3D; 2K个指针, 2Kx8KB &#x3D; 16MB</p>
-<p>二级间接 (2K)^2 x 8KB &#x3D; 32GB</p>
-<p>三级间接 (2K)^3 x 8KB &#x3D; 64TB</p>
-<p>该文件系统最大支持 64TB+32GB+16MB+96KB</p>
-</li>
-<li><p>系统支持最大文件系统分区是多少？</p>
-<p>24位用于标识<br>$$<br>2^{24}\times8K&#x3D;2^{32}&#x3D;128GB<br>$$</p>
-</li>
-<li><p>若内存中除文件索引节点外没有其他信息，访问在位置13423956 需要访问多少次？</p>
-<p>估算页表大小，找到这个位置处于 间接页表 访问3次</p>
-</li>
-</ol>
-<h3 id="空闲磁盘空间的管理"><a href="#空闲磁盘空间的管理" class="headerlink" title="空闲磁盘空间的管理"></a>空闲磁盘空间的管理</h3><p>管理方式：空闲分区表、空闲分区链表、索引及位示图</p>
-<p>分配方法：与分区分配是一样的</p>
-<ul>
-<li>最佳（有序，从小到大排列）</li>
-<li>最坏（有序，从小到大排列）</li>
-<li>首次适应(地址从低到高)</li>
-<li>循环首次适应(地址从低到高)</li>
-</ul>
-<h4 id="空闲分区表"><a href="#空闲分区表" class="headerlink" title="空闲分区表"></a>空闲分区表</h4><p>采用空闲分区表管理磁盘空闲空间，将磁盘空间中各个空闲分区登记在一张表中，一个分区对应一个表项，每个表项包含有空闲分区号、分区起始块号、分区长度等主要信息</p>
-<p>空闲分区号 | 分区起始块号 | 分区长度</p>
-<p>特点</p>
-<ul>
-<li>实现简单</li>
-<li>将各空闲分区按照长度从小到大的顺序进行排列。再利用有效的查找算法，如折半查找、冒泡法查找等，能很快找到需要大小的空闲分区</li>
-<li>当存储空间中的空闲分区分布较分散且数量较多时，空闲分区表将会很大</li>
-<li>一个很大的空闲分区表一次性全部装入内存，则需要很大的内存空间，而且会降低空闲分区表的检索速度</li>
-</ul>
-<h4 id="空闲分区链表"><a href="#空闲分区链表" class="headerlink" title="空闲分区链表"></a>空闲分区链表</h4><p>通过指针将各个空闲分区连接起来，并记载各空闲分区大小，称为空闲分区链表。采用空闲分区链表法不存在空闲分区表的额外空间开销</p>
-<p>head –&gt; 地址|大小|指针 –&gt; 地址|大小|指针</p>
-<p>问题</p>
-<ul>
-<li>当使用一段时间以后，可能会使空闲分区链表中包含太多小分区</li>
-<li>由于链接指针，如果一个文件需要很多空闲分区，这种操作模式将大大降低文件存储速度</li>
-<li>由许多离散小分区组成的文件时，将回收的小分区链接到空闲分区链表中需要很长时间</li>
-<li>若一个文件申请连续存储空间，则需要花费较长的时间查找相邻的空闲分区</li>
-</ul>
-<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>索引方法为空闲分区建立索引表。可以基于空闲存储块建立索引，也可以基于可变分区建立索引</p>
-<p><img src="/images/blog_images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/%E7%A9%BA%E9%97%B2%E5%88%86%E5%8C%BA%E7%B4%A2%E5%BC%95%E5%9B%BE.png" alt="空闲分区索引图"></p>
-<p>特点</p>
-<ul>
-<li>基于可变分区建立索引比基于存储块建立索引的效率高</li>
-<li>根据索引项查找空闲分区，将会提高文件存储效率 </li>
-<li>利用索引方法管理空闲空间，适合于各种文件分配法</li>
-</ul>
-<h4 id="位示图"><a href="#位示图" class="headerlink" title="位示图"></a>位示图</h4><ul>
-<li>位示图利用二进制位0、1表示存储空间中存储块的使用状态。空闲分区用0表示，已分配分区用1表示</li>
-<li>用位示图表示存储空间的使用状态，可以容易地找到一个或一组连续的空闲分区</li>
-<li>位示图需要占用的存储空间大小为：磁盘容量（字节数）&#x2F; （8 * 数据块大小）</li>
-<li>搜索一个很大的位示图将会降低文件系统的性能</li>
-</ul>
-<h2 id="文件目录及文件控制块"><a href="#文件目录及文件控制块" class="headerlink" title="文件目录及文件控制块"></a>文件目录及文件控制块</h2><p>对目录管理的要求如下 ：</p>
-<ol>
-<li>实现“按名存取”</li>
-<li>提高对目录的检索速度</li>
-<li>文件共享</li>
-<li>允许文件重名</li>
-</ol>
-<h3 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h3><p>整个文件系统中包含所有文件说明信息的集合称为“文件目录”，其中每个文件对应有一个目录项，描述了该文件的目录信息</p>
-<ul>
-<li>系统中由多个文件的目录项构成一种特殊的文件，称为目录文件</li>
-<li>目录文件具有固定格式，由系统进行管理，用户不能直接访问目录</li>
-</ul>
-<p>组织目录信息的方式，不同文件系统组织目录信息的方式是不同的：</p>
-<ol>
-<li><p>只将一些必要信息如文件名、文件大小、外存中的存储位置等保存在文件目录中。</p>
-<p>例如：UNIX系统的目录仅有文件名和指针</p>
-</li>
-<li><p>有的文件系统将一个文件的全部目录内容信息组织成一个目录项</p>
-<p>例如：DOS系统的目录</p>
-</li>
-</ol>
-<h4 id="常见的目录结构"><a href="#常见的目录结构" class="headerlink" title="常见的目录结构"></a>常见的目录结构</h4><h5 id="单级目录结构"><a href="#单级目录结构" class="headerlink" title="单级目录结构"></a>单级目录结构</h5><p>整个系统中，所有用户的全部文件目录保存在一张目录表中，<strong>每个文件的目录项占用一个表项</strong></p>
-<p>目录项中主要记载的信息有：文件名及扩展名，文件的物理地址，其它属性，如文件长度、建立日期、文件类型等</p>
-<p>单级目录的优点：简单且能实现目录管理的基本功能——按名存取</p>
-<p>单级目录缺点：</p>
-<ul>
-<li>查找速度慢</li>
-<li>不允许重名</li>
-<li>不便于实现文件共享</li>
-</ul>
-<h5 id="两级目录"><a href="#两级目录" class="headerlink" title="两级目录"></a>两级目录</h5><p>为每一个用户建立一个单独的用户文件目录UFD，再建立一个主文件目录MFD</p>
-<p>在主文件目录中，每个用户目录文件都占有一个目录项，其目录项中包括用户名和指向该用户目录文件的指针</p>
-<p><img src="/images/blog_images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/%E4%B8%A4%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png" alt="两级目录结构"></p>
-<p>两级目录结构优点：</p>
-<ol>
-<li>提高了检索目录的速度</li>
-<li>在不同的用户目录中，可以使用相同的文件名</li>
-<li>不同用户还可使用不同的文件名来访问系统中的同一个共享文件</li>
-</ol>
-<h5 id="层次目录结构"><a href="#层次目录结构" class="headerlink" title="层次目录结构"></a>层次目录结构</h5><p>树型目录结构：主目录在这里被称为根目录，把数据文件称为树叶，其它的目录均作为树的结点</p>
-<p><img src="/images/blog_images/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/%E6%A0%91%E5%9E%8B%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84.png" alt="树型目录结构"></p>
-<ul>
-<li>路径名：从树的根（即主目录）开始，把全部目录文件名与数据文件名，依次地用“&#x2F;”连接起来，即构成该数据文件的路径名（path name）<ul>
-<li>系统中的每一个文件都有惟一的路径名</li>
-<li>绝对路径是指，从根目录开始，遍历与文件名相连的子目录，连同文件名一起构成的文件路径表示方式</li>
-</ul>
-</li>
-<li>当前目录：为每个进程设置一个“当前目录”，又称为“工作目录”进程对各文件的访问都相对于“当前目录”而进行，通常称为相对路径</li>
-</ul>
-<p>添加删除目录</p>
-<p>增加目录：在用户要创建一个新文件时，只需查看在自己的UFD及其子目录中，有无与新建文件相同的文件名。若无，便可在UFD或其某个子目录中增加一个新目录项</p>
-<p>目录删除采用下述两种方法处理：</p>
-<ul>
-<li>不删除非空目录</li>
-<li>可删除非空目录</li>
-</ul>
-<h3 id="文件控制块"><a href="#文件控制块" class="headerlink" title="文件控制块"></a>文件控制块</h3><ul>
-<li><p>当一个文件被进程打开以后，系统将在内存中为之建立一个称为“文件控制块FCB(File Control Block) ”的数据结构，用于记载文件在内存中的使用情况 </p>
-</li>
-<li><p>FCB的地址将被记录到它的PCB中，以利于以后进程对它的使用</p>
-</li>
-<li><p>文件系统将把文件目录项和文件分配表中的全部或大多数信息，以及当前使用文件的有关信息，填入文件控制块FCB中</p>
-</li>
-<li><p><strong>FCB包含目录项，FCB不等于目录项</strong></p>
-</li>
-</ul>
-<p>典型FCB</p>
-<table>
-<thead>
-<tr>
-<th>文件名</th>
-<th>文件标识符</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>文件结构</td>
-<td>文件类型</td>
-</tr>
-<tr>
-<td>文件组织</td>
-<td>记录长度</td>
-</tr>
-<tr>
-<td>当前文件大小</td>
-<td>最大文件尺寸</td>
-</tr>
-<tr>
-<td>文件设备</td>
-<td>物理位置</td>
-</tr>
-<tr>
-<td>存储控制</td>
-<td>口令</td>
-</tr>
-<tr>
-<td>文件建立时间</td>
-<td>最近存取时间</td>
-</tr>
-<tr>
-<td>最近修改时间</td>
-<td>当前存取方式</td>
-</tr>
-<tr>
-<td>当前的共享状态</td>
-<td>共享访问是的等待状态</td>
-</tr>
-<tr>
-<td>进程访问文件所用的逻辑单元号</td>
-<td>当前的逻辑位置</td>
-</tr>
-<tr>
-<td>访问元素的当前物理位置</td>
-<td>下一个元素的物理位置</td>
-</tr>
-<tr>
-<td>缓冲区大小</td>
-<td>缓冲区地址</td>
-</tr>
-<tr>
-<td>指向下一个FCB的指针</td>
-<td>文件创建只</td>
-</tr>
-<tr>
-<td>临时&#x2F;永久文件</td>
-<td>文件拥有者</td>
-</tr>
-</tbody></table>
-<h3 id="“按名存取”的实现过程"><a href="#“按名存取”的实现过程" class="headerlink" title="“按名存取”的实现过程"></a>“按名存取”的实现过程</h3><p>打开文件 文件名–&gt;目录搜索，查找目录项在磁盘上的物理位置–&gt;建立文件控制块，将相应文件信息复制到文件控制块中</p>
-<p>读写文件 访问文件控制块，获得文件在磁盘上的物理位置–&gt;将文件数据的传输 内存&lt;–&gt;磁盘</p>
-<p>关闭文件 释放文件控制块</p>
-<h4 id="打开文件表"><a href="#打开文件表" class="headerlink" title="打开文件表"></a>打开文件表</h4><p>每打开一个文件,就会返回给该进程打开文件的FCB（文件控制块）地址指针</p>
-<p>一个进程对应一个打开文件表，该表中记录了该进程已打开的所有文件的FCB（文件控制块）地址指针</p>
-<p>文件表方便进程对这些文件的进行存取</p>
-<p>在进程控制块（PCB）中有一个指向打开文件表的指针</p>
-<h3 id="FAT文件系统"><a href="#FAT文件系统" class="headerlink" title="FAT文件系统"></a>FAT文件系统</h3><p>1．目录及文件分配表的实现 </p>
-<p>文件分配表是用来描述文件数据在磁盘上的块分布的一个数据结构</p>
-<p>管理磁盘的最大单位叫磁盘卷</p>
-<ul>
-<li>一个磁盘卷可以跨越多个物理磁盘，也可以是一个物理磁盘的一个区域</li>
-<li>个磁盘卷通常被格式化成一种物理文件系统格式</li>
-</ul>
-<p>FAT文件系统是根据其组织形式</p>
-<table>
-<thead>
-<tr>
-<th>引导扇区</th>
-<th>FAT1</th>
-<th>FAT2</th>
-<th>根目录</th>
-<th>其他目录和文件</th>
-</tr>
-</thead>
-<tbody><tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<ul>
-<li>根目录必须存放在磁盘卷的一个固定位置，这样才可以正确地找到启动系统所需要的文件</li>
-<li>FAT文件系统保存了两个文件分配表，这样当其中一个遭到破坏时可以保护磁盘卷</li>
-<li>使用引导扇区来装载操作系统的核心文件</li>
-</ul>
-<p>文件分配表FAT</p>
-<ul>
-<li>FAT文件系统格式化的盘卷以簇为单位进行分配</li>
-<li>簇的概念 ——磁盘上描述基本单位的划分方法，以位来考虑</li>
-<li>根据簇的不同，FAT文件系统有三个不同的版本</li>
-</ul>
-<p>FAT根目录</p>
-<ul>
-<li>在硬盘上，根目录有512项</li>
-<li>位于根目录上的每个文件和子目录，在根目录中都包含一个目录项 </li>
-<li>每个目录项的大小为32字节</li>
-</ul>
-<p>文件的查找：在FAT文件系统中，当访问一个文件时，通过文件名在目录表中查到其首簇号，通过首簇号查FAT表得到其数据所在位置</p>
-<h4 id="文件控制块的实现"><a href="#文件控制块的实现" class="headerlink" title="文件控制块的实现"></a>文件控制块的实现</h4><ul>
-<li>当打开一个FAT的文件时，把要打开文件的管理控制信息从辅存的目录表和FAT表中读到内存，形成FCB</li>
-<li>将FCB的地址以一个文件描述符（FD）的形式返回给用户进程 </li>
-<li>文件操作均可通过FD得到该打开文件的描述信息 。在用户和实际物理文件之间建立一条“通道”或者“操作界面”</li>
-</ul>
-<h3 id="LINUX文件系统"><a href="#LINUX文件系统" class="headerlink" title="LINUX文件系统"></a>LINUX文件系统</h3><ul>
-<li><p>扇区(Sector)为最小的物理储存单位，每个扇区为512bytes</p>
-</li>
-<li><p>柱面(Cylinder)，磁柱是分区(partition)的最小单位</p>
-<ul>
-<li>第一个扇区最重要，里面有<ul>
-<li>主要开机区(Master boot record，MBR) 其中MBR占有446bytes</li>
-<li>分区表(partition table)，而partition table则占有64bytes</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>主要分区与延伸分区最多可以有四笔(硬盘的限制)</p>
-</li>
-<li><p>延伸分区最多只能有一个(操作系统的限制)</p>
-</li>
-<li><p>逻辑分区是由延伸分区持续切割出来的分区；</p>
-</li>
-<li><p>能够被格式化后，作为数据存取的分区为主要分区与逻辑分区。延伸分区无法格式化</p>
-</li>
-<li><p>逻辑分区的数量依操作系统而不同，在Linux系统中，IDE硬盘最多有59个逻辑分区(5号到63号)，SATA硬盘则有11个逻辑分区</p>
-</li>
-</ul>
-<p>磁盘分区完毕后还需要进行格式化(format)，传统的磁盘与文件系统应用中，一个分区只能被格式化成为一个文件系统，现代技术可以让一个分区能被格式化成多个文件系统</p>
-<ul>
-<li>Linux是一个unix类操作系统</li>
-<li>Linux中用EXT2文件系统结构</li>
-<li>在EXT2文件系统中，查找文件的过程：<ul>
-<li>当访问一个文件时，通过文件名在“目录表”中查到其“索引节点号”</li>
-<li>通过“索引节点号”查“索引节点表”</li>
-<li>通过“索引节点表”得到其“索引节点”</li>
-<li>通过索引节点得到文件数据所在位置</li>
-</ul>
-</li>
-</ul>
-<p>Linux文件系统的一个文件由目录项、inode和数据块组成</p>
-<ul>
-<li><strong>目录项</strong>:包括文件名和inode节点号。</li>
-<li><strong>Inode</strong>：又称文件索引节点，是文件基本信息的存放地和数据块指针存放地。</li>
-<li><strong>数据块</strong>：文件的具体内容存放地。</li>
-</ul>
-<p>目录项–&gt;Inode表–&gt;数据块</p>
-<h2 id="文件共享"><a href="#文件共享" class="headerlink" title="文件共享"></a>文件共享</h2><p>文件共享是指多个用户进程访问同一个文件。</p>
-<p>文件共享的有效控制需要考虑同时存取和存取权限问题</p>
-<ul>
-<li>控制存取权限就是控制授权用户以合法的方式访问文件 </li>
-<li>允许多个用户同时读文件内容，但不允许同时修改，或同时读且修改文件内容</li>
-</ul>
-<p>当用户修改文件内容时，将整个文件作为临界资源，锁定整个文件，不允许其他共享用户同时读或写文件，解锁后才能读或写文件</p>
-<ul>
-<li>也可以仅仅锁定指定的一条记录，允许其他共享用户读&#x2F;写该文件的其它记录</li>
-</ul>
-<h4 id="为共享用户设置的存取权限的类型"><a href="#为共享用户设置的存取权限的类型" class="headerlink" title="为共享用户设置的存取权限的类型"></a>为共享用户设置的存取权限的类型</h4><p>无，探知，执行，读，追加，更新，修改权限，删除</p>
-<p>根据实现文件共享的方式不同，可以分为3种实现方</p>
-<ul>
-<li>利用链接目录项实现法——链接目录项要求在文件目录项中设置一个链接指针，用于指向共享文件的目录项</li>
-<li>利用索引节点实现法——通过共享文件索引节点来共享文件</li>
-<li>利用URL实现法——通过URL方式共享文件</li>
-</ul>
-<h4 id="链接目录项实现文件共享"><a href="#链接目录项实现文件共享" class="headerlink" title="链接目录项实现文件共享"></a>链接目录项实现文件共享</h4><p>根据链接指针内容找到共享文件的目录项，读取该目录项中文件起始位置等信息，操作该文件。每当有用户进程共享文件时，共享文件目录项中的“共享计数”加1；当用户不再共享该文件，撤消链接指针时，“共享计数”减1。只有当共享文件用户数为1时（假设文件被创建时，共享计数为1），该文件主才有权删除共享文件。 </p>
-<p>引用初始值是1，当其他文件引用它时才加一</p>
-<h4 id="利用索引节点实现文件共享"><a href="#利用索引节点实现文件共享" class="headerlink" title="利用索引节点实现文件共享"></a>利用索引节点实现文件共享</h4><p><img src="/%E6%96%87%E4%BB%B6.assets/%E7%B4%A2%E5%BC%95%E8%8A%82%E7%82%B9%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB.png" alt="索引节点实现文件共享"></p>
-<p>当user1想删除文件时，只是删除了目录项，系统不允许user1删除索引节点。只有当共享</p>
-<h3 id="利用URL实现文件共享"><a href="#利用URL实现文件共享" class="headerlink" title="利用URL实现文件共享"></a>利用URL实现文件共享</h3><p>一个完整的URL包括访问文件的方法（协议）、文件所在的主机域名、目录路径名和文件名几部份</p>
-<h2 id="软硬链接"><a href="#软硬链接" class="headerlink" title="软硬链接"></a>软硬链接</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> f1 <span class="comment">#创建f1,touch命令用于修改文件或者目录的时间属性，包括存取时间和更改时间。若文件不存在，系统会建立一个新的文件</span></span><br><span class="line"><span class="built_in">cat</span> f1 <span class="comment">#命令用于连接文件并打印到标准输出设备上</span></span><br><span class="line"><span class="built_in">ln</span> -s f1 f2 <span class="comment">#创建软链接</span></span><br><span class="line"><span class="built_in">ls</span> -l</span><br><span class="line"><span class="built_in">ln</span> f1 f3 <span class="comment">#创建硬链接</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#查看内容是一致的</span></span><br><span class="line"><span class="built_in">ls</span> -l</span><br><span class="line"><span class="built_in">cat</span> f1</span><br><span class="line"><span class="built_in">cat</span> f2</span><br><span class="line"><span class="built_in">cat</span> f3</span><br><span class="line"></span><br><span class="line"><span class="built_in">rm</span> -f f1 <span class="comment">#删掉f1</span></span><br><span class="line"><span class="comment">#f2 无法cat，f3可以</span></span><br><span class="line"><span class="built_in">ln</span> f3 f1 <span class="comment">#重新链接f1</span></span><br><span class="line"><span class="comment">#现在f2可以正常使用了</span></span><br></pre></td></tr></table></figure>
-
 
       
     </div>
