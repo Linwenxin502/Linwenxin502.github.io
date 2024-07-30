@@ -20,19 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+  <meta name="description" content="session机制，原理 session是服务端存储的一个对象，主要用来存储所有访问过该服务端的客户端的用户信息，从而实现保持用户会话状态。但是服务器重启时，内存会被销毁，存储的用户信息也就消失了。不同的用户访问服务端的时候会在session对象中存储键值对：”键”用来存储开启这个用户信息的”钥匙”，在登录成功后，”钥匙”通过cookie返回给客户端，客户端存储为sessionId记录在cook">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo Learn">
-<meta property="og:url" content="http://example.com/2023/08/29/hexo-learn/index.html">
+<meta property="og:title" content="token与session的区别">
+<meta property="og:url" content="http://example.com/2024/07/29/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/index.html">
 <meta property="og:site_name" content="Blog of WenXinLin">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="session机制，原理 session是服务端存储的一个对象，主要用来存储所有访问过该服务端的客户端的用户信息，从而实现保持用户会话状态。但是服务器重启时，内存会被销毁，存储的用户信息也就消失了。不同的用户访问服务端的时候会在session对象中存储键值对：”键”用来存储开启这个用户信息的”钥匙”，在登录成功后，”钥匙”通过cookie返回给客户端，客户端存储为sessionId记录在cook">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-08-29T06:24:50.606Z">
-<meta property="article:modified_time" content="2023-08-29T06:24:50.606Z">
+<meta property="og:image" content="http://example.com/images/blog_images/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/1722254837.png">
+<meta property="og:image" content="http://example.com/images/blog_images/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/1722254856.png">
+<meta property="article:published_time" content="2024-07-29T12:16:24.651Z">
+<meta property="article:modified_time" content="2024-07-29T12:16:24.651Z">
 <meta property="article:author" content="LinWenXin">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/blog_images/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/1722254837.png">
 
-<link rel="canonical" href="http://example.com/2023/08/29/hexo-learn/">
+<link rel="canonical" href="http://example.com/2024/07/29/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/">
 
 
 <script id="page-configurations">
@@ -45,7 +48,7 @@
   };
 </script>
 
-  <title>Hexo Learn | Blog of WenXinLin</title>
+  <title>token与session的区别 | Blog of WenXinLin</title>
   
 
 
@@ -146,7 +149,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/29/hexo-learn/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/29/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/myicon.jpg">
@@ -159,7 +162,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo Learn
+          token与session的区别
         </h1>
 
         <div class="post-meta">
@@ -169,7 +172,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-08-29 14:24:50" itemprop="dateCreated datePublished" datetime="2023-08-29T14:24:50+08:00">2023-08-29</time>
+              <time title="Created: 2024-07-29 20:16:24" itemprop="dateCreated datePublished" datetime="2024-07-29T20:16:24+08:00">2024-07-29</time>
             </span>
 
           
@@ -183,19 +186,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+        <ol>
+<li><p><strong>session机制，原理</strong></p>
+<p>session是服务端存储的一个对象，主要用来存储所有访问过该服务端的客户端的用户信息，从而实现保持用户会话状态。但是服务器重启时，内存会被销毁，存储的用户信息也就消失了。不同的用户访问服务端的时候会在session对象中存储键值对：”键”用来存储开启这个用户信息的”钥匙”，在登录成功后，”钥匙”通过cookie返回给客户端，客户端存储为sessionId记录在cookie中。当客户端再次访问时，会默认携带cookie中的sessionId来实现会话机制。</p>
+</li>
+</ol>
+<p><img src="/images/blog_images/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/1722254837.png" alt="session"></p>
+<pre><code>#session是基于cookie的：
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+1.  cookie的数据4k左右
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+2.  cookie存储数据的格式：字符串key=value
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+3.  cookie存储有效期：可以自行通过expires进行具体的日期设置，如果没设置，默认是关闭浏览器时失效。
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+4.  cookie有效范围：当前域名下有效。所以session这种会话存储方式方式只适用于客户端代码和服务端代码运行在同一台服务器上（前后端项目协议、域名、端口号都一致，即在一个项目下）
+
+#session持久化：用于解决重启服务器后session就消失的问题。在数据库中存储session，而不是存储在内存中。
+
+#当客户端存储的cookie失效后，服务端的session不会立即销毁，会有一个延时，服务端会定期清理无效session，避免无效数据占用存储空间。
+</code></pre>
+<ol start="2">
+<li><p><strong>token机制，原理</strong></p>
+<p>适用于项目级的前后端分离（前后端代码运行在不同的服务器下）</p>
+</li>
+</ol>
+<p><img src="/images/blog_images/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/1722254856.png" alt="token"></p>
+<pre><code>请求登录时，token和sessionId原理相同，是对key和key对应的用户信息进行加密后的加密字符，登录成功后，会在响应主体中将&#123;token：\&#39;字符串\&#39;&#125;返回给客户端。客户端通过cookie、sessionStorage、localStorage都可以进行存储。再次请求时不会默认携带，需要在请求拦截器位置给请求头中添加认证字段Authorization携带token信息，服务器端就可以通过token信息查找用户登录状态。
+</code></pre>
 
     </div>
 
@@ -210,10 +228,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2023/10/07/web%E6%8E%A7%E5%88%B6arduino/" rel="next" title="通过网页控制Wemos（arduino平台系列）">
-      通过网页控制Wemos（arduino平台系列） <i class="fa fa-chevron-right"></i>
+    <a href="/2023/11/20/WIFI6_mib%E9%A1%B9%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/" rel="prev" title="WIFI6_mib项代码分析">
+      <i class="fa fa-chevron-left"></i> WIFI6_mib项代码分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/07/29/Deauth%E6%8A%A5%E6%96%87%E7%9A%84ReasonCode/" rel="next" title="无线协议规定的802.11 Deauth报文的Reason Code">
+      无线协议规定的802.11 Deauth报文的Reason Code <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>

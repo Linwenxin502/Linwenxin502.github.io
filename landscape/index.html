@@ -110,7 +110,7 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">9</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">11</span></a>
 
   </li>
   </ul>
@@ -137,6 +137,149 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/29/Deauth%E6%8A%A5%E6%96%87%E7%9A%84ReasonCode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myicon.jpg">
+      <meta itemprop="name" content="LinWenXin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of WenXinLin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/29/Deauth%E6%8A%A5%E6%96%87%E7%9A%84ReasonCode/" class="post-title-link" itemprop="url">无线协议规定的802.11 Deauth报文的Reason Code</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-07-29 20:43:36" itemprop="dateCreated datePublished" datetime="2024-07-29T20:43:36+08:00">2024-07-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Code-Reason："><a href="#Code-Reason：" class="headerlink" title="Code Reason："></a>Code Reason：</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">0 Reserved</span><br><span class="line">1 Unspecific Reason</span><br><span class="line">2 Previous authentication no longer valid</span><br><span class="line">3 Deauthenticated because sending STA is leaving (or has left) IBSS or ESS</span><br><span class="line">4 Disassociated due to inactivity</span><br><span class="line">5 Disassociated because AP is unable to handle all currently associated STAs</span><br><span class="line">6 Class 2 frame received from nonauthenticated STA</span><br><span class="line">7 Class 3 frame received from nonassociated STA</span><br><span class="line">8 Disassociated because sending STA is leaving (or has left) BSS</span><br><span class="line">9 STA requesting (re)association is not authenticated with responding STA</span><br><span class="line">10 Disassociated because the information in the Power Capability element is unacceptable</span><br><span class="line">11 Disassociated because the information in the Supported Channels element is unacceptable</span><br><span class="line">12 Reserved</span><br><span class="line">13 Invalid information element.</span><br><span class="line">14 Message integrity code (MIC) failure</span><br><span class="line">15 4-Way Handshake timeout</span><br><span class="line">16 Group Key Handshake timeout</span><br><span class="line">17 Information element in 4-Way Handshake different from (Re)Association Request/Probe Response/Beacon frame</span><br><span class="line">18 Invalid group cipher or Association denied due to requesting STA not supporting all of the data rates in the BSSBasicRateSet parameter</span><br><span class="line">19 Invalid pairwise cipher</span><br><span class="line">20 Invalid AKMP</span><br><span class="line">21 Unsupported RSN information element version</span><br><span class="line">22 Invalid RSN information element capabilities</span><br><span class="line">23 IEEE 802.1X authentication failed</span><br><span class="line">24 Cipher suite rejected because of the security policy</span><br><span class="line">25-31 Reserved</span><br><span class="line">32 Disassociated for unspecified, QoS-related reason</span><br><span class="line">33 Disassociated because QoS AP lacks sufficient bandwidth for this QoS STA</span><br><span class="line">34 Disassociated because excessive number of frames need to be acknowledged, but are not acknowledged due to AP transmissions and/or poor channel conditions</span><br><span class="line">35 Disassociated because STA is transmitting outside the limits of its TXOPs</span><br><span class="line">36 Requested from peer STA as the STA is leaving the BSS (or resetting)</span><br><span class="line">37 Requested from peer STA as it does not want to use the mechanism</span><br><span class="line">38 Requested from peer STA as the STA received frames using the mechanism for which a setup is required</span><br><span class="line">39 Requested from peer STA due to timeout</span><br><span class="line">45 Peer STA does not support the requested cipher suite</span><br><span class="line">45-65 Reserved</span><br><span class="line">535 Reserved</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/29/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myicon.jpg">
+      <meta itemprop="name" content="LinWenXin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of WenXinLin">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/07/29/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/" class="post-title-link" itemprop="url">token与session的区别</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-07-29 20:16:24" itemprop="dateCreated datePublished" datetime="2024-07-29T20:16:24+08:00">2024-07-29</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ol>
+<li><p><strong>session机制，原理</strong></p>
+<p>session是服务端存储的一个对象，主要用来存储所有访问过该服务端的客户端的用户信息，从而实现保持用户会话状态。但是服务器重启时，内存会被销毁，存储的用户信息也就消失了。不同的用户访问服务端的时候会在session对象中存储键值对：”键”用来存储开启这个用户信息的”钥匙”，在登录成功后，”钥匙”通过cookie返回给客户端，客户端存储为sessionId记录在cookie中。当客户端再次访问时，会默认携带cookie中的sessionId来实现会话机制。</p>
+</li>
+</ol>
+<p><img src="/images/blog_images/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/1722254837.png" alt="session"></p>
+<pre><code>#session是基于cookie的：
+
+1.  cookie的数据4k左右
+
+2.  cookie存储数据的格式：字符串key=value
+
+3.  cookie存储有效期：可以自行通过expires进行具体的日期设置，如果没设置，默认是关闭浏览器时失效。
+
+4.  cookie有效范围：当前域名下有效。所以session这种会话存储方式方式只适用于客户端代码和服务端代码运行在同一台服务器上（前后端项目协议、域名、端口号都一致，即在一个项目下）
+
+#session持久化：用于解决重启服务器后session就消失的问题。在数据库中存储session，而不是存储在内存中。
+
+#当客户端存储的cookie失效后，服务端的session不会立即销毁，会有一个延时，服务端会定期清理无效session，避免无效数据占用存储空间。
+</code></pre>
+<ol start="2">
+<li><p><strong>token机制，原理</strong></p>
+<p>适用于项目级的前后端分离（前后端代码运行在不同的服务器下）</p>
+</li>
+</ol>
+<p><img src="/images/blog_images/token%E4%B8%8Esession%E7%9A%84%E5%8C%BA%E5%88%AB/1722254856.png" alt="token"></p>
+<pre><code>请求登录时，token和sessionId原理相同，是对key和key对应的用户信息进行加密后的加密字符，登录成功后，会在响应主体中将&#123;token：\&#39;字符串\&#39;&#125;返回给客户端。客户端通过cookie、sessionStorage、localStorage都可以进行存储。再次请求时不会默认携带，需要在请求拦截器位置给请求头中添加认证字段Authorization携带token信息，服务器端就可以通过token信息查找用户登录状态。
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1649,78 +1792,11 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/29/hexo-learn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/myicon.jpg">
-      <meta itemprop="name" content="LinWenXin">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Blog of WenXinLin">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/08/29/hexo-learn/" class="post-title-link" itemprop="url">Hexo Learn</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2023-08-29 14:24:50" itemprop="dateCreated datePublished" datetime="2023-08-29T14:24:50+08:00">2023-08-29</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/landscape/page/2/">2</a><a class="extend next" rel="next" href="/landscape/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
 
 
 
@@ -1787,7 +1863,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
