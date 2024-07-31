@@ -20,27 +20,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Linux-ros安装以及驱动摄像头123451. sudo apt-get install ros-melodic-usb-cam  &#x2F;&#x2F;melodic是我Linux下ros的版本号，这里根据你安装的ros版本写成对应的2. roslaunch usb_cam usb_cam-text.launch3. rqt_image_view  遇到的问题：   cannot identity ‘&amp;#x2">
+  <meta name="description" content="IIC（Inter-Integrated Circuit)，简单说就是IC（芯片）之间通信的总线。总线的意思就是，各个器件都并联接到一组公共的线路上，然后共用这条线路来传输数据信息。总线的英文名字是BUS，所以这些数据的传输有点类似搭乘巴士的感觉。这样做的好处就是可以复用线路，大家都来坐巴士就好了，不用自己开车了。  IC通信协议采用2条信号线，1条时钟线（SCL）和1条数据线（SDA），属于串行">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Linux-ros安装以及驱动摄像头">
-<meta property="og:url" content="http://example.com/2023/10/23/ros%E6%91%84%E5%83%8F%E5%A4%B4/index.html">
+<meta property="og:title" content="IIC详解">
+<meta property="og:url" content="http://example.com/2024/07/30/IIC%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Blog of WenXinLin">
-<meta property="og:description" content="Linux-ros安装以及驱动摄像头123451. sudo apt-get install ros-melodic-usb-cam  &#x2F;&#x2F;melodic是我Linux下ros的版本号，这里根据你安装的ros版本写成对应的2. roslaunch usb_cam usb_cam-text.launch3. rqt_image_view  遇到的问题：   cannot identity ‘&amp;#x2">
+<meta property="og:description" content="IIC（Inter-Integrated Circuit)，简单说就是IC（芯片）之间通信的总线。总线的意思就是，各个器件都并联接到一组公共的线路上，然后共用这条线路来传输数据信息。总线的英文名字是BUS，所以这些数据的传输有点类似搭乘巴士的感觉。这样做的好处就是可以复用线路，大家都来坐巴士就好了，不用自己开车了。  IC通信协议采用2条信号线，1条时钟线（SCL）和1条数据线（SDA），属于串行">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811173924155.png">
-<meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174527797.png">
-<meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174815599.png">
-<meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175254153.png">
-<meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175521614.png">
-<meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175546261.png">
-<meta property="og:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811181320598.png">
-<meta property="article:published_time" content="2023-10-23T12:13:53.273Z">
-<meta property="article:modified_time" content="2023-10-23T12:13:53.273Z">
+<meta property="og:image" content="http://example.com/images/blog_images/IIC%E8%AF%A6%E8%A7%A3/1722341068.png">
+<meta property="og:image" content="http://example.com/images/blog_images/IIC%E8%AF%A6%E8%A7%A3/1722341069.png">
+<meta property="og:image" content="http://example.com/images/blog_images/IIC%E8%AF%A6%E8%A7%A3/1722341070.png">
+<meta property="og:image" content="http://example.com/images/blog_images/IIC%E8%AF%A6%E8%A7%A3/1722341071.png">
+<meta property="article:published_time" content="2024-07-30T12:14:42.797Z">
+<meta property="article:modified_time" content="2024-07-30T12:14:42.797Z">
 <meta property="article:author" content="LinWenXin">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811173924155.png">
+<meta name="twitter:image" content="http://example.com/images/blog_images/IIC%E8%AF%A6%E8%A7%A3/1722341068.png">
 
-<link rel="canonical" href="http://example.com/2023/10/23/ros%E6%91%84%E5%83%8F%E5%A4%B4/">
+<link rel="canonical" href="http://example.com/2024/07/30/IIC%E8%AF%A6%E8%A7%A3/">
 
 
 <script id="page-configurations">
@@ -53,7 +50,7 @@
   };
 </script>
 
-  <title>Linux-ros安装以及驱动摄像头 | Blog of WenXinLin</title>
+  <title>IIC详解 | Blog of WenXinLin</title>
   
 
 
@@ -122,7 +119,7 @@
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">11</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">14</span></a>
 
   </li>
   </ul>
@@ -154,7 +151,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/23/ros%E6%91%84%E5%83%8F%E5%A4%B4/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/07/30/IIC%E8%AF%A6%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/myicon.jpg">
@@ -167,7 +164,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Linux-ros安装以及驱动摄像头
+          IIC详解
         </h1>
 
         <div class="post-meta">
@@ -177,7 +174,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2023-10-23 20:13:53" itemprop="dateCreated datePublished" datetime="2023-10-23T20:13:53+08:00">2023-10-23</time>
+              <time title="Created: 2024-07-30 20:14:42" itemprop="dateCreated datePublished" datetime="2024-07-30T20:14:42+08:00">2024-07-30</time>
             </span>
 
           
@@ -191,18 +188,54 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Linux-ros安装以及驱动摄像头"><a href="#Linux-ros安装以及驱动摄像头" class="headerlink" title="Linux-ros安装以及驱动摄像头"></a>Linux-ros安装以及驱动摄像头</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>. sudo apt<span class="literal">-get</span> install ros<span class="literal">-melodic-usb-cam</span>  //melodic是我Linux下ros的版本号，这里根据你安装的ros版本写成对应的</span><br><span class="line"><span class="number">2</span>. roslaunch usb_cam usb_cam<span class="literal">-text</span>.launch</span><br><span class="line"><span class="number">3</span>. rqt_image_view</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>遇到的问题： </p>
+        <p>IIC（Inter-Integrated Circuit)，简单说就是IC（芯片）之间通信的总线。总线的意思就是，各个器件都并联接到一组公共的线路上，然后共用这条线路来传输数据信息。总线的英文名字是BUS，所以这些数据的传输有点类似搭乘巴士的感觉。这样做的好处就是可以复用线路，大家都来坐巴士就好了，不用自己开车了。</p>
+<p><img src="/images/blog_images/IIC%E8%AF%A6%E8%A7%A3/1722341068.png" alt="IIC物理拓扑图"></p>
+<p>IC通信协议采用2条信号线，1条时钟线（SCL）和1条数据线（SDA），属于串行半双工通信。标准模式的传输速率为100Kb&#x2F;s，快速模式为400Kb&#x2F;s。总线上可以接多个从设备，从设备的地址必须不同。也可也接多个主设备，但同一时刻只能有一个主设备控制总线。最大设备数量受总线的最大负载电容400pf限制。</p>
+<p>每个从设备有自己的设备地址，主设备发送START信号后，紧跟着发送想要通信的从设备地址字节，7位器件地址+1位读写标志位（0为写，1为读）。</p>
+<p>START信号：当时钟线为高时，数据线下跳会产生启动信号</p>
+<p>STOP信号：当时钟线为高时，数据线上跳会产生停止信号</p>
+<p><strong>总线的状态</strong></p>
 <ol>
-<li>cannot identity ‘&#x2F;dev&#x2F;vedio0’, 如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811173924155.png" alt="问题现象"></li>
+<li><p>总线空闲时，就是总线上所有器件都释放了总线，此时SCL和SDA因为有上拉电阻都为高电平。</p>
+</li>
+<li><p>主设备检测到总线当前处于空闲时，此时可以发START信号获得总线得控制权。</p>
+</li>
+<li><p>主设备通信完成后，发送STOP信号释放总线，总线处于空闲状态。</p>
+</li>
 </ol>
-<blockquote>
-<p>原因：没有将摄像头链接到虚拟机Linux，这里只要在虚拟机菜单栏找个虚拟机-&gt;可移动设备，将摄像头链接到虚拟机即可，比如：我的电脑的摄像头名称是USB2.0 VGA UVC WebCam，找到之后点击连接到主机，若没有显示摄像头名称则说明你的电脑摄像头不兼容Linux系统，关于如何查看，可打开电脑设备管理器，在照相机的管理列表下则是你电脑的摄像头名称，如下<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174527797.png" alt="信息列表"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811174815599.png" alt="在这里插入图片描述"><br>2. 进程被杀，摄像头灯光亮一下就灭<br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175254153.png" alt="在这里插入图片描述"><br>原因：配置太低了，可以到虚拟机-&gt;设置改一下USB控制器的兼容性，改到3.0就可以<img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175521614.png" alt="在这里插入图片描述"><br><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811175546261.png" alt="在这里插入图片描述"></p>
-</blockquote>
-<p>做到这里，虚拟机下的Linux-ros的摄像头驱动应该就可以跑起来了</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">1</span>. roscore //这里第一次跑摄像头驱动最好跑一下master控制节点</span><br><span class="line"><span class="number">2</span>. roslaunch usb_cam usb_cam<span class="literal">-test</span>.launch </span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="/images/blog_images/ros%E6%91%84%E5%83%8F%E5%A4%B4/20200811181320598.png" alt="在这里插入图片描述"></p>
+<p><strong>写数据的过程</strong></p>
+<ol>
+<li><p>主控检测到总线处于空闲时，首先发送一个START信号来控制总线，此时总线进入忙状态；</p>
+</li>
+<li><p>主控发送一个设备地址字节，总线上所有的从设备都会收到；</p>
+</li>
+<li><p>当被控器件检测到主控发送的地址与自己的地址相同时发送一个应答信号(ACK)；</p>
+</li>
+<li><p>主控收到ACK后开始发送第一个数据字节；</p>
+</li>
+<li><p>被控器收到数据字节后发送一个ACK表示继续传送数据，发送NACK表示传送数据结束；</p>
+</li>
+<li><p>主控发送完全部数据后，发送一个停止位STOP，结束整个通讯并且释放总线；</p>
+</li>
+</ol>
+<p><strong>读过程</strong></p>
+<ol>
+<li><p>主控在检测到总线空闲的状况下，首先发送一个START信号掌管总线；</p>
+</li>
+<li><p>发送一个地址字节(包括7位地址码和一位R&#x2F;W，最后1bit为0，表示写)，将地址写入地址计数器；</p>
+</li>
+<li><p>当被控器件检测到主控发送的地址与自己的地址相同时发送一个应答信号(ACK)；</p>
+</li>
+<li><p>主控收到ACK后紧接着发送一个start状态，然后重复第一个地址字节（device code）最后1bit为&#39;1&#39;，代表读。</p>
+</li>
+<li><p>释放数据总线，开始接收第一个数据字节；</p>
+</li>
+<li><p>主控收到数据后发送ACK表示继续传送数据，发送NACK表示传送数据结束；</p>
+</li>
+</ol>
+<p><img src="/images/blog_images/IIC%E8%AF%A6%E8%A7%A3/1722341069.png" alt="IIC时序图1"></p>
+<p><img src="/images/blog_images/IIC%E8%AF%A6%E8%A7%A3/1722341070.png" alt="IIC时序图2"></p>
+<p><img src="/images/blog_images/IIC%E8%AF%A6%E8%A7%A3/1722341071.png" alt="IIC时序图3"></p>
 
     </div>
 
@@ -218,12 +251,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/10/23/%E5%9F%BA%E4%BA%8Encurses%E7%9A%84%E8%B4%AA%E5%90%83%E8%9B%87/" rel="prev" title="基于linux ncurses的C语言贪吃蛇">
-      <i class="fa fa-chevron-left"></i> 基于linux ncurses的C语言贪吃蛇
+    <a href="/2024/07/29/Deauth%E6%8A%A5%E6%96%87%E7%9A%84ReasonCode/" rel="prev" title="无线协议规定的802.11 Deauth报文的Reason Code">
+      <i class="fa fa-chevron-left"></i> 无线协议规定的802.11 Deauth报文的Reason Code
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/11/14/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" rel="next" title="内存管理(嵌入式系统与应用)">
-      内存管理(嵌入式系统与应用) <i class="fa fa-chevron-right"></i>
+    <a href="/2024/07/30/wireshark_%E6%97%A0%E7%BA%BF%E6%8A%A5%E6%96%87%E5%88%86%E6%9E%90%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" rel="next" title="wireshark_无线报文分析常用指令">
+      wireshark_无线报文分析常用指令 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -298,7 +331,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
