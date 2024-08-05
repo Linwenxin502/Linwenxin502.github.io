@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="一、项目背景在调试wolink-cloud时，遇见了两次mib_get引起的数组越界导致错误的问题，因此这次主要阅读 WIFI6 项目中 mib 相关的代码，以多域名 LAN_DHCP_MULTI_DOMAIN mib 配置项为例子，看看 mib 配置项是怎么工作的，包括如何定义、接口和串口获取和设置。 二、主要文件mibtbl.c、mibtbl.h、mib.h、mib.c、msgparser.c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WIFI6_mib项代码分析">
+<meta property="og:url" content="http://example.com/2024/08/05/WIFI6_mib%E9%A1%B9%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Blog of WenXinLin">
+<meta property="og:description" content="一、项目背景在调试wolink-cloud时，遇见了两次mib_get引起的数组越界导致错误的问题，因此这次主要阅读 WIFI6 项目中 mib 相关的代码，以多域名 LAN_DHCP_MULTI_DOMAIN mib 配置项为例子，看看 mib 配置项是怎么工作的，包括如何定义、接口和串口获取和设置。 二、主要文件mibtbl.c、mibtbl.h、mib.h、mib.c、msgparser.c">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-05T08:13:58.899Z">
+<meta property="article:modified_time" content="2023-11-20T10:29:35.000Z">
+<meta property="article:author" content="LinWenXin">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/08/05/WIFI6_mib%E9%A1%B9%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>WIFI6_mib项代码分析 | Blog of WenXinLin</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Blog of WenXinLin</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">14</span></a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/08/05/WIFI6_mib%E9%A1%B9%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/myicon.jpg">
+      <meta itemprop="name" content="LinWenXin">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Blog of WenXinLin">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          WIFI6_mib项代码分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-08-05 16:13:58" itemprop="dateCreated datePublished" datetime="2024-08-05T16:13:58+08:00">2024-08-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-11-20 18:29:35" itemprop="dateModified" datetime="2023-11-20T18:29:35+08:00">2023-11-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="一、项目背景"><a href="#一、项目背景" class="headerlink" title="一、项目背景"></a>一、项目背景</h4><p>在调试<code>wolink-cloud</code>时，遇见了两次<code>mib_get</code>引起的数组越界导致错误的问题，因此这次主要阅读 WIFI6 项目中 mib 相关的代码，以多域名 <code>LAN_DHCP_MULTI_DOMAIN</code> mib 配置项为例子，看看 mib 配置项是怎么工作的，包括如何定义、接口和串口获取和设置。</p>
+<h4 id="二、主要文件"><a href="#二、主要文件" class="headerlink" title="二、主要文件"></a>二、主要文件</h4><p><code>mibtbl.c</code>、<code>mibtbl.h</code>、<code>mib.h</code>、<code>mib.c</code>、<code>msgparser.c</code>、<code>flash.c</code>。</p>
+<h4 id="三、定义"><a href="#三、定义" class="headerlink" title="三、定义"></a>三、定义</h4><h5 id="mib-table"><a href="#mib-table" class="headerlink" title="mib_table"></a>mib_table</h5><p>在<code>mibtbl.c</code>中定义了一个全局的结构体数组<code>mib_table</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Global variable definitions */</span></span><br><span class="line">mib_table_entry_T mib_table[]=&#123;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_USER_XDSL_SLAVE</span></span><br><span class="line">MIB_TBL_ENTRY(MIB_WAN_MODE, CURRENT_SETTING, <span class="string">&quot;WAN_MODE&quot;</span>, INTEGER_T, _OFFSET(wanmode), _SIZE(wanmode), <span class="string">&quot;15&quot;</span>),  <span class="comment">// Magician: Enable all wan mode by default.</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line">MIB_TBL_ENTRY(MIB_WAN_MODE, CURRENT_SETTING, <span class="string">&quot;WAN_MODE&quot;</span>, INTEGER_T, _OFFSET(wanmode), _SIZE(wanmode), <span class="string">&quot;7&quot;</span>),  <span class="comment">// Magician: Enable all wan mode by default.</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">...</span><br><span class="line">MIB_TBL_ENTRY(MIB_ADSL_LAN_DHCP_MULTI_DOMAIN,	CURRENT_SETTING,	<span class="string">&quot;LAN_DHCP_MULTI_DOMAIN&quot;</span>,	STRING_T,	_OFFSET(lan_dhcp_multi_domain), 	_SIZE(lan_dhcp_multi_domain),	<span class="string">&quot;wifi.cmcc,cmcc.wifi&quot;</span>),</span><br><span class="line">...</span><br><span class="line">MIB_TBL_ENTRY(MIB_MAC_FILTER_ENABLE, CURRENT_SETTING, <span class="string">&quot;MAC_FILTER_ENABLE&quot;</span>, BYTE_T, _OFFSET(mac_filter_enable), _SIZE(mac_filter_enable), <span class="string">&quot;0&quot;</span>),</span><br><span class="line">&#123;<span class="number">0</span>&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>该结构体数组定义包括了一条条的<code>MIB_TBL_ENTRY</code>语句。</p>
+<h6 id="MIB-TBL-ENTRY"><a href="#MIB-TBL-ENTRY" class="headerlink" title="MIB_TBL_ENTRY"></a>MIB_TBL_ENTRY</h6><p><code>MIB_TBL_ENTRY</code>是一个宏定义，定义在<code>mibtbl.h</code>中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">ifdef</span> INCLUDE_DEFAULT_VALUE</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MIB_TBL_ENTRY(ID, CLASS, NAME, TYPE, OFFSET, SIZE, DEFAULT) &#123;ID, CLASS, NAME, TYPE, OFFSET, SIZE, DEFAULT&#125;</span></span><br><span class="line"><span class="meta">#<span class="keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MIB_TBL_ENTRY(ID, CLASS, NAME, TYPE, OFFSET, SIZE, DEFAULT) &#123;ID, CLASS, NAME, TYPE, OFFSET, SIZE &#125;</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>宏展开之后就是一个数组元素的初始化，数组元素的类型为自定义的结构体类型<code>mib_table_entry_T</code>。</p>
+<h6 id="mib-table-entry-T"><a href="#mib-table-entry-T" class="headerlink" title="mib_table_entry_T"></a>mib_table_entry_T</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">mib_table_entry</span> &#123;</span></span><br><span class="line">	<span class="type">int</span> id;</span><br><span class="line">	CONFIG_DATA_T mib_type;</span><br><span class="line">	<span class="type">char</span> name[<span class="number">48</span>];</span><br><span class="line">	TYPE_T type;</span><br><span class="line">	<span class="type">int</span> offset;</span><br><span class="line">	<span class="type">int</span> size;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> INCLUDE_DEFAULT_VALUE</span></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span> *defaultValue;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">&#125; mib_table_entry_T;</span><br></pre></td></tr></table></figure>
+
+<p>多域名mib项宏展开之后就是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;MIB_ADSL_LAN_DHCP_MULTI_DOMAIN, CURRENT_SETTING, <span class="string">&quot;LAN_DHCP_MULTI_DOMAIN&quot;</span>, STRING_T, _OFFSET(lan_dhcp_multi_domain), _SIZE(lan_dhcp_multi_domain), <span class="string">&quot;wifi.cmcc,cmcc.wifi&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>MIB_ADSL_LAN_DHCP_MULTI_DOMAIN</code>是一个枚举值，枚举定义在<code>mib.h</code>中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> * ADSL Router MIB ID</span><br><span class="line"> */</span><br><span class="line">enum</span><br><span class="line">&#123;</span><br><span class="line">	CS_ENTRY_ID = 0,</span><br><span class="line">	MIB_ADSL_LAN_IP,</span><br><span class="line">	...</span><br><span class="line">	/* apply for support multi domain, ex: &quot;cmcc.wifi,wifi.cmcc&quot; */</span><br><span class="line">	MIB_ADSL_LAN_DHCP_MULTI_DOMAIN,</span><br><span class="line">	/* mac filter enable */</span><br><span class="line">	MIB_MAC_FILTER_ENABLE,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>再看<code>_OFFSET</code>以及<code>_SIZE</code>的宏定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> FIELD_OFFSET(type, field)	((unsigned long)(long *)&amp;(((type *)0)-&gt;field))</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _OFFSET(field)			((intptr_t)FIELD_OFFSET(MIB_T,field))</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> _SIZE(field)			sizeof(((MIB_T *)0)-&gt;field)</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看到这两个宏是用来获取一个 field 在一个结构体中的偏移量以及占用的字节数。因此可以推断<code>lan_dhcp_multi_domain</code>是一个结构体中的成员变量，该结构体为<code>MIB_T</code>。</p>
+<h6 id="MIB-T"><a href="#MIB-T" class="headerlink" title="MIB_T"></a>MIB_T</h6><p>果然，在<code>mib.h</code>中可以找到结构体定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * MIB struct</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">config_setting</span> &#123;</span></span><br><span class="line">	...</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_RTK_DNS_TRAP</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> lan_dhcp_multi_domain[MAX_DOMAIN_NUM * MAX_DOMAIN_NAME_LEN + MAX_DOMAIN_NUM]; <span class="comment">//aplly for cmcc.wifi and wifi.cmcc</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	...</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> mac_filter_enable;</span><br><span class="line">&#125; __PACK__ MIB_T, *MIB_Tp;</span><br></pre></td></tr></table></figure>
+
+<p>这个就是整个 mib 配置项了，实际存放 mib 值的地方。</p>
+<h4 id="四、获取"><a href="#四、获取" class="headerlink" title="四、获取"></a>四、获取</h4><p>在开发中，经常需要获取 mib 项的值，一般是通过<code>mib_get</code>获取，比如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mib_get(MIB_ADSL_LAN_DHCP_MULTI_DOMAIN, (<span class="type">void</span> *)strDevName);</span><br></pre></td></tr></table></figure>
+
+<p>会去读取mib中<code>MIB_ADSL_LAN_DHCP_MULTI_DOMAIN</code>对应的 mib 项中的值，并写到<code>strDevName</code>指向的内存中。</p>
+<h5 id="mib-get"><a href="#mib-get" class="headerlink" title="mib_get()"></a>mib_get()</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">mib_get</span><span class="params">(<span class="type">int</span> id, <span class="type">void</span> *value)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> mib_get_s(id, value, <span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>mib_get()</code>是对<code>mib_get_s()</code>的封装。</p>
+<h5 id="mib-get-s"><a href="#mib-get-s" class="headerlink" title="mib_get_s()"></a>mib_get_s()</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">mib_get_s</span><span class="params">(<span class="type">int</span> id, <span class="type">void</span> *value, <span class="type">int</span> value_len)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mymsgbuf</span> <span class="title">qbuf</span>;</span></span><br><span class="line">	MSG_T *mymsg;</span><br><span class="line">	mib_table_entry_T info;</span><br><span class="line">	<span class="type">int</span> ret;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> WLAN_SUPPORT</span></span><br><span class="line">	id = wlan_mib_id_reorder(id);</span><br><span class="line">	<span class="keyword">if</span> (id == <span class="number">-1</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s: Invalid wlan_idx: %d\n&quot;</span>, __FUNCTION__, wlan_idx);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!mib_info_id(id, &amp;info))</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">memset</span>((<span class="type">void</span> *)&amp;qbuf, <span class="number">0</span>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> mymsgbuf));</span><br><span class="line">	mymsg = &amp;qbuf.msg;</span><br><span class="line">	mymsg-&gt;cmd = CMD_MIB_GET;</span><br><span class="line">	mymsg-&gt;arg1 = id;</span><br><span class="line"></span><br><span class="line">	sendcmd(&amp;qbuf);</span><br><span class="line">	<span class="keyword">if</span> (qbuf.request == MSG_SUCC) &#123;</span><br><span class="line">		<span class="keyword">if</span> (value_len &gt; <span class="number">0</span> &amp;&amp;  value_len &lt; info.size) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;\033[31;1;4mWARN: Program(%s) mib_get() ID (%d,%s) size=%d but value buffer size=%d\033[0m\n&quot;</span>, __progname, id, info.name, info.size, value_len);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">memcpy</span>(value, mymsg-&gt;mtext, info.size);</span><br><span class="line">		ret = <span class="number">1</span>;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s: Get request failed! (id=%d)\n&quot;</span>, __func__, id);</span><br><span class="line">		ret = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先在<code>wlan_mib_id_reorder</code>中会判断需要获取的 mib 项的 id 是不是无线多接口的id：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line"> *	Reorder mib id for wlan mib in case of multiple wlan interfaces.</span><br><span class="line"> *	Return value: reordered wlan mib id based on wlan_idx, -1 on error.</span><br><span class="line"> */</span><br><span class="line">static int wlan_mib_id_reorder(int id)</span><br><span class="line">&#123;</span><br><span class="line">	int mib_id=id;</span><br><span class="line">	</span><br><span class="line">	if (id &gt; DUAL_WLAN_START_ID &amp;&amp; id &lt; DUAL_WLAN_END_ID) &#123;</span><br><span class="line">		mib_id = -1;</span><br><span class="line">		if (isValid_wlan_idx(wlan_idx))</span><br><span class="line">			mib_id = id + wlan_idx;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return mib_id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>DUAL_WLAN_START_ID</code>和<code>DUAL_WLAN_END_ID</code>是作为无线多接口 id 的开始和结束标志，定义为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> &#123;</span></span><br><span class="line">	WLAN_CS_ENTRY_ID = <span class="number">1000</span>,</span><br><span class="line">    DUAL_WLAN_START_ID = WLAN_CS_ENTRY_ID,</span><br><span class="line"></span><br><span class="line"><span class="comment">//================== start of dual wlan interface definition=================</span></span><br><span class="line">    MIB_MAPPING(SSID),</span><br><span class="line">    MIB_MAPPING(CHAN_NUM),</span><br><span class="line">    MIB_MAPPING(OFDMA_ENABLED),</span><br><span class="line"></span><br><span class="line">    DUAL_WLAN_END_ID,</span><br><span class="line"></span><br><span class="line"><span class="comment">//==================end of dual wlan interface definition=================</span></span><br><span class="line">	...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>而<code>MIB_MAPPING</code>宏定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MIB_MAPPING(name) \</span></span><br><span class="line"><span class="meta">    MIB_WLAN_##name, \</span></span><br><span class="line"><span class="meta">    MIB_WLAN1_##name, \</span></span><br><span class="line"><span class="meta">    MIB_WLAN2_##name</span></span><br></pre></td></tr></table></figure>
+
+<p>也就是一个<code>MIB_MAPPING</code>就定义了三个id，我们在获取2.4G或者5G的配置项时，需要设置全局变量<code>wlan_idx</code>为0或者1，作用就在这里：<code>mib_id = id + wlan_idx;</code>。</p>
+<p>然后通过<code>mib_info_id</code>获取需要的 mib 项的信息，即获取<code>mib_table</code>中的一个元素。获取过程最后是通过调用了<code>cfg_mib_info_id</code>来获取的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">cfg_mib_info_id</span><span class="params">(<span class="keyword">struct</span> mymsgbuf *qbuf)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="built_in">memcpy</span>((<span class="type">void</span> *)qbuf-&gt;msg.mtext, (<span class="type">void</span> *)&amp;mib_table[k], <span class="keyword">sizeof</span>(mib_table_entry_T));</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在<code>mib_info_id</code>中将获取到的 mib 项信息拷贝出来：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">mib_info_id</span><span class="params">(<span class="type">int</span> id, mib_table_entry_T * info)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="built_in">memcpy</span>(info, mymsg-&gt;mtext, <span class="keyword">sizeof</span>(mib_table_entry_T));</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>再去获取 mib 项中存放的值，这一过程最终会通过id调用<code>_mib_get</code>进行字符串或者内存拷贝获取：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> _mib_get(<span class="type">int</span> id, <span class="type">void</span> *value) <span class="comment">/* get mib value */</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="built_in">strcpy</span>((<span class="type">char</span> *)value, (<span class="type">const</span> <span class="type">char</span> *)(pMibTbl + mib_table[i].offset));</span><br><span class="line">	...<span class="comment">//or</span></span><br><span class="line">	<span class="built_in">memcpy</span>(value, pMibTbl + mib_table[i].offset, mib_table[i].size);</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的<code>pMibTbl</code>指向前面定义的<code>config_setting</code>结构体，即<code>MIB_T</code>（有可能是其他类似的结构体，通过mib项的mib_type定向，加上需要获取的 mib 项在这个结构体中的偏移量以及占用字节大小，可以将 mib 值拷贝出来，最后再一次通过<code>memcpy</code>拷贝到<code>mib_get</code>的第二个实参中。</p>
+<p>注意，这里可能会出现内存溢出的问题！如何解决？<strong>确保用来存放获取值的变量大小不小于mib配置项定义的大小</strong>。</p>
+<h4 id="五、设置"><a href="#五、设置" class="headerlink" title="五、设置"></a>五、设置</h4><p>如果需要修改mib项的值，需要通过<code>mib_set</code>设置。</p>
+<h5 id="mib-set"><a href="#mib-set" class="headerlink" title="mib_set()"></a>mib_set()</h5><p>函数定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">mib_set</span><span class="params">(<span class="type">int</span> id, <span class="type">void</span> *value)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">mymsgbuf</span> <span class="title">qbuf</span>;</span></span><br><span class="line">	MSG_T *mymsg;</span><br><span class="line">	mib_table_entry_T info;</span><br><span class="line">	<span class="type">int</span> ret = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> WLAN_SUPPORT</span></span><br><span class="line">	id = wlan_mib_id_reorder(id);</span><br><span class="line">	<span class="keyword">if</span> (id == <span class="number">-1</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s: Invalid wlan_idx: %d\n&quot;</span>, __FUNCTION__, wlan_idx);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!mib_info_id(id, &amp;info))</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	mymsg = &amp;qbuf.msg;</span><br><span class="line">	mymsg-&gt;cmd = CMD_MIB_SET;</span><br><span class="line">	mymsg-&gt;arg1 = id;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_USER_CWMP_TR069</span></span><br><span class="line">	mymsg-&gt;arg2 = <span class="number">1</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	<span class="built_in">memcpy</span>(mymsg-&gt;mtext, value, info.size);</span><br><span class="line"></span><br><span class="line">	sendcmd(&amp;qbuf);</span><br><span class="line">	<span class="keyword">if</span> (qbuf.request != MSG_SUCC) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%s: Set request failed! (id=%d)\n&quot;</span>, __func__, id);</span><br><span class="line">		ret = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CONFIG_USER_DBUS_PROXY</span></span><br><span class="line">	<span class="keyword">if</span> (ret != <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		send_notify_msg_dbusproxy(id, e_dbus_signal_mib_set, <span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined(CONFIG_E8B) &amp;&amp; defined(CONFIG_USER_LANNETINFO)</span></span><br><span class="line">	<span class="keyword">extern</span> <span class="type">void</span> <span class="title function_">rtk_e8_mib_set_signal_to_lannetinfo</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span>;</span><br><span class="line">	rtk_e8_mib_set_signal_to_lannetinfo(ret, id);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>前面的步骤跟<code>mib_get_s()</code>一样，即判断是否是无线的mib以及获取mib项信息。</p>
+<p>不一样的是将<code>cmd</code>类型设置为<code>CMD_MIB_SET</code>，将需要设置的值<code>memcpy</code>到<code>mtext</code>中，通过<code>sendcmd</code>去设置。这个过程和获取一样，需要和<code>configd</code>进程通信。</p>
+<p>最终会根据<code>CMD_MIB_SET</code>去调用<code>cfg_mib_set</code>。</p>
+<h5 id="cfg-mib-set"><a href="#cfg-mib-set" class="headerlink" title="cfg_mib_set()"></a>cfg_mib_set()</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">cfg_mib_set</span><span class="params">(<span class="keyword">struct</span> mymsgbuf *qbuf)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">if</span> (_mib_set(qbuf-&gt;msg.arg1, (<span class="type">void</span> *)qbuf-&gt;msg.mtext) != <span class="number">0</span>) &#123;</span><br><span class="line">		qbuf-&gt;request = MSG_SUCC;</span><br><span class="line">		...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终会调用<code>_mib_set</code>进行设置。</p>
+<h5 id="mib-set-1"><a href="#mib-set-1" class="headerlink" title="_mib_set()"></a>_mib_set()</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> _mib_set(<span class="type">int</span> id, <span class="type">void</span> *value) <span class="comment">/* set mib value */</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> * pMibTbl;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// search current setting mib table</span></span><br><span class="line">	<span class="keyword">for</span> (i=<span class="number">0</span>; mib_table[i].id; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> ( mib_table[i].id == id )</span><br><span class="line">		&#123;</span><br><span class="line"><span class="comment">//			TRACE(&quot;mib_set %s\n&quot;,mib_table[i].name);</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>((mib_table[i].mib_type != CURRENT_SETTING) &amp;&amp;</span><br><span class="line">		(mib_table[i].mib_type != HW_SETTING) &amp;&amp;</span><br><span class="line">		(mib_table[i].mib_type != RUNNING_SETTING))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pMibTbl = __mib_get_mib_tbl(mib_table[i].mib_type);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">switch</span> (mib_table[i].type) &#123;</span><br><span class="line">	<span class="keyword">case</span> BYTE_T:</span><br><span class="line">	<span class="keyword">case</span> WORD_T:</span><br><span class="line">	<span class="keyword">case</span> DWORD_T:</span><br><span class="line">	<span class="keyword">case</span> INTEGER_T:</span><br><span class="line">	<span class="keyword">case</span> BYTE5_T:</span><br><span class="line">	<span class="keyword">case</span> BYTE6_T:</span><br><span class="line">	<span class="keyword">case</span> BYTE13_T:</span><br><span class="line">	<span class="keyword">case</span> BYTE_ARRAY_T:</span><br><span class="line">	<span class="keyword">case</span> IA_T:</span><br><span class="line">	<span class="meta">#<span class="keyword">ifdef</span> CONFIG_IPV6</span></span><br><span class="line">	<span class="keyword">case</span> IA6_T:</span><br><span class="line">	<span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">		<span class="built_in">memcpy</span>(pMibTbl + mib_table[i].offset, value, mib_table[i].size);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> INT_ARRAY_T:</span><br><span class="line">		<span class="built_in">memcpy</span>(pMibTbl + mib_table[i].offset, value, mib_table[i].size);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	<span class="keyword">case</span> ENCRYPT_STRING_T:</span><br><span class="line">	<span class="keyword">case</span> STRING_T:</span><br><span class="line">		<span class="keyword">if</span> ( <span class="built_in">strlen</span>(value)+<span class="number">1</span> &gt; mib_table[i].size )</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">strcpy</span>(pMibTbl + mib_table[i].offset, value);</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">default</span>:</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>过程和<code>_mib_get</code>差不多，也是先通过id去获取mib信息，然后通过size和offset去<code>mib_table</code>中去设置mib值，设置方法也是<code>memcpy</code>或者<code>strcpy</code>。</p>
+<h4 id="六、串口命令"><a href="#六、串口命令" class="headerlink" title="六、串口命令"></a>六、串口命令</h4><p>在开发或测试中经常需要通过串口输入命令去获取或设置 mib 配置项。最常见的就是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">flash all | grep ...</span><br><span class="line">flash get &lt;MIB_NAME&gt;</span><br><span class="line">flash set &lt;MIB_NAME&gt; &lt;value&gt;</span><br></pre></td></tr></table></figure>
+
+<h5 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">Usage: flash cmd</span><br><span class="line">cmd:</span><br><span class="line">  info 				show flash offset information.</span><br><span class="line">  loop 				enter a infinite loop.</span><br><span class="line">  get_def &lt;MIB-NAME&gt; [...] 		get the default value of specific mib from flash memory.</span><br><span class="line">    Example:</span><br><span class="line">      get_def NTP_ENABLED 		get the default value of specific mib table entry from flash memory.</span><br><span class="line">      get_def ATM_VC_TBL 		get the default value of specific mib chain from flash memory.</span><br><span class="line">      get_def ATM_VC_TBL.NUM 	get the default number of specific mib chain from flash memory.</span><br><span class="line">      get_def ATM_VC_TBL.0.ifIndex 	get the default value of specific member of the mib chain record from flash memory.</span><br><span class="line">  all_def [cs|hs] 			dump all mib default value from flash memory.</span><br><span class="line">  get &lt;MIB-NAME&gt; [...] 		get the specific mib from flash memory.</span><br><span class="line">    Example:</span><br><span class="line">      get NTP_ENABLED 		get the specific mib table entry from flash memory.</span><br><span class="line">      get ATM_VC_TBL 		get all the specific mib chain records from flash memory.</span><br><span class="line">      get ATM_VC_TBL.NUM 	get the specific mib chain record size from flash memory.</span><br><span class="line">      get ATM_VC_TBL.0.ifIndex 	get the specific member of the mib chain record from flash memory.</span><br><span class="line">  set &lt;MIB-NAME MIB-VALUE&gt; [...]set the specific mib into flash memory.</span><br><span class="line">    Example:</span><br><span class="line">      set NTP_ENABLED 0 	set the specific mib table entry into flash memory.</span><br><span class="line">      set ATM_VC_TBL.1.vpi 8 	set the specific member of the mib chain recrod into flash memory.</span><br><span class="line">  add &lt;MIB-CHAIN-NAME&gt; [...] 	add mib chain record(s) into flash memory.</span><br><span class="line">    Example:</span><br><span class="line">      add ATM_VC_TBL 		add a mib chain record into flash memory.</span><br><span class="line">      add ATM_VC_TBL.2 		add mib chain record(s) into flash memory.</span><br><span class="line">  del &lt;MIB-CHAIN-NAME&gt; [...] 	delete mib chain record(s) into flash memory.</span><br><span class="line">    Example:</span><br><span class="line">      del ATM_VC_TBL 		delete the last mib chain record into flash memory.</span><br><span class="line">      del ATM_VC_TBL.2 		delete the specific mib chain record into flash memory.</span><br><span class="line">  all [cs|hs] 			dump all flash parameters.</span><br><span class="line">  list [cs|hs|all] [sorted] 	list mib parameters(sorted).</span><br><span class="line">  default &lt;cs/hs&gt; 		write program default value to flash.</span><br><span class="line">  clear 			clear flash setting.</span><br><span class="line">  get_wlband_num 			get wlan band number.</span><br><span class="line">  r &lt;OFFSET&gt; 			read flash from &lt;OFFSET&gt;.</span><br><span class="line">  w &lt;OFFSET&gt; &lt;VALUE&gt; 		write flash to &lt;OFFSET&gt;.</span><br><span class="line">  erase &lt;OFFSET&gt; 		erase flash from &lt;OFFSET&gt;.</span><br><span class="line">  set_rt &lt;cs&gt; [ENTRY-NAME] [MIB-NAME] [MIB-VALUE] [ENTRY-INDEX]   : set a specific default mib value on dut runtime.</span><br><span class="line">    [ENTRY_NAME]: If you want to set the value of a single MIB_TABLE, please keep it as &#x27;MIB_TABLE&#x27;.</span><br><span class="line">                  If you want to set the members of Chain, please enter the corresponding Chain Name.</span><br><span class="line">    [ENTRY_INDEX]: If there is no such value, then do not write. When setting for the first time, add the index value from 0.</span><br><span class="line">    Example:</span><br><span class="line">      a)set_rt cs MIB_TABLE MIB_LAN_IP_ADDR 192.168.1.1 		set lan Ip addr to 192.168.1.1.</span><br><span class="line">      b)set_rt cs WLAN_MBSSIB_TBL ssid ChinaNet-wlan-5G 0 		set wlan0 root ssid to ChinaNet-wlan-5G.</span><br><span class="line">  xmlchk &lt;XMLFILENAME&gt; 		check if the xml config file is valid.</span><br><span class="line">  swap wlan &lt;cs/hs&gt; 		swap wlan mib.</span><br></pre></td></tr></table></figure>
+
+<p>解析命令并生效的代码在<code>user/boa/src/LINUX/flash.c</code>中。</p>
+<h5 id="main函数"><a href="#main函数" class="headerlink" title="main函数"></a>main函数</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; cmd_table[i].cmd_name; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strcmp</span>(cmd_table[i].cmd_name, argv[<span class="number">1</span>]) == <span class="number">0</span>) &#123;</span><br><span class="line">			ret = cmd_table[i].cmd_func(argc - <span class="number">1</span>, argv + <span class="number">1</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>main</code>函数中会去遍历<code>cmd_table</code>，根据 flash 命令的第一个参数去执行不同的函数进行处理。可以知道最常用的 <code>flash get</code>命令会去调用<code>get_func</code>，<code>flash set</code>命令会调用<code>set_func</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="type">char</span> *cmd_name;</span><br><span class="line">	<span class="type">int</span> (*cmd_func)(<span class="type">int</span> argc, <span class="type">char</span> *argv[]);</span><br><span class="line">&#125; cmd_table[] = &#123;</span><br><span class="line">	&#123; <span class="string">&quot;info&quot;</span>, info_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;loop&quot;</span>, loop_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;get_def&quot;</span>, get_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;all_def&quot;</span>, all_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;get&quot;</span>, get_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;set&quot;</span>, set_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;add&quot;</span>, add_del_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;del&quot;</span>, add_del_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;all&quot;</span>, all_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;list&quot;</span>, list_func &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> !defined(CONFIG_USER_XMLCONFIG) &amp;&amp; !defined(CONFIG_USER_CONF_ON_XMLFILE)</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> CAN_RW_FILE</span></span><br><span class="line">	&#123; <span class="string">&quot;rds&quot;</span>, rs_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;rcs&quot;</span>, rs_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;rhs&quot;</span>, rs_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;wds&quot;</span>, ws_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;wcs&quot;</span>, ws_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;whs&quot;</span>, ws_func &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	&#123; <span class="string">&quot;check&quot;</span>, check_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;dump&quot;</span>, dump_func &#125;,</span><br><span class="line">	<span class="comment">//&#123; &quot;reset&quot;, reset_func &#125;,</span></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	&#123; <span class="string">&quot;default&quot;</span>, default_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;clear&quot;</span>, clear_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;get_wlband_num&quot;</span>, get_wlband_func &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> VOIP_SUPPORT</span></span><br><span class="line">	&#123; <span class="string">&quot;voip&quot;</span>, voip_func &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> USE_11N_UDP_SERVER	<span class="comment">//cathy test</span></span></span><br><span class="line">	&#123; <span class="string">&quot;gethw&quot;</span>, gethw_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;sethw&quot;</span>, sethw_func &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	&#123; <span class="string">&quot;w&quot;</span>, w_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;r&quot;</span>, r_func &#125;,</span><br><span class="line">	&#123; <span class="string">&quot;erase&quot;</span>, erase_func &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">if</span> !defined(CONFIG_USER_XMLCONFIG) &amp;&amp; defined(CONFIG_USER_CONF_ON_XMLFILE)</span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined (CONFIG_DEFAULT_CONF_ON_RT_XMLFILE)</span></span><br><span class="line">	&#123; <span class="string">&quot;set_rt&quot;</span>, set_rt_func &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	&#123; <span class="string">&quot;xmlchk&quot;</span>, xmlchk_func &#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">if</span> defined(SWAP_WLAN_MIB) </span></span><br><span class="line">	&#123;<span class="string">&quot;swap&quot;</span>, swap_wlan_func&#125;,</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	&#123; <span class="number">0</span> &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里我们主要分析一下 get 和 set 命令。</p>
+<h5 id="get-func"><a href="#get-func" class="headerlink" title="get_func"></a>get_func</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">get_func</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> argNum, ret = <span class="number">0</span>;</span><br><span class="line">	<span class="type">char</span> mib[<span class="number">100</span>];</span><br><span class="line">	<span class="type">char</span> buffer[<span class="number">2048</span>];</span><br><span class="line">	CONFIG_MIB_T flag;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (argc &lt; <span class="number">2</span>) &#123;</span><br><span class="line">		showHelp();</span><br><span class="line">		<span class="keyword">return</span> error;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (argNum = <span class="number">1</span>; argNum &lt; argc; argNum++) &#123;</span><br><span class="line">		flag = mib_name_resolve(argv[argNum], mib);</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> USE_11N_UDP_SERVER</span></span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">strncmp</span>(mib, <span class="string">&quot;HW_WLAN&quot;</span>, <span class="number">7</span>))</span><br><span class="line">			udp_server_cmd = <span class="number">1</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">		<span class="keyword">if</span> (flag == CONFIG_MIB_CHAIN &amp;&amp; (ret = mib_chain_get_by_name(mib, buffer)) != <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">if</span> (ret == error)</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;fail: %s\n&quot;</span>, buffer);</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, buffer);</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (flag == CONFIG_MIB_TABLE &amp;&amp; (ret = mib_table_get_by_name(mib, buffer)) != <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;%s=%s\n&quot;</span>, mib, buffer);</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">strcmp</span>(mib, <span class="string">&quot;HW_PROVINCE_FEATURE_VER&quot;</span>) == <span class="number">0</span>) &#123;</span><br><span class="line">				<span class="keyword">if</span> (!provinceFeatureExist(buffer)) &#123;</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">&quot;\033[33mWarning: PROVINCE_FEATURE_VER is not exist!\033[0m\n&quot;</span>);</span><br><span class="line">				&#125; <span class="keyword">else</span> <span class="keyword">if</span> (!areaMatchFeature(buffer)) &#123;</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">&quot;\033[33mWarning: PROVINCE_FEATURE_VER and AREA not match, feature will not open!\033[0m\n&quot;</span>);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			ret = error;</span><br><span class="line">		&#125;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> USE_11N_UDP_SERVER</span></span><br><span class="line">		udp_server_cmd = <span class="number">0</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先通过执行命令传递进来的 MIB_NAME，获取映射的 MIB_NAME，以及一个 flag 用来区分需要获取的是一个 mib 项还是一个 chain；然后通过该 MIB_NAME 和 flag 获取 mib 项的值。</p>
+<p>如果是获取多域名，会调用<code>mib_table_get_by_name</code>，这里只写出了重要的代码。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">mib_table_get_by_name</span><span class="params">(<span class="type">char</span> *name, <span class="type">char</span> *buffer)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> i, id = <span class="number">-1</span>;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> mibvalue[<span class="number">1024</span>];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; mib_table[i].id; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(mib_table[i].name, name)) &#123;</span><br><span class="line">			id = mib_table[i].id;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/* fails */</span></span><br><span class="line">	<span class="keyword">if</span> (_mib_get(id, mibvalue) == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	mib_to_string_ex(buffer, mibvalue, mib_table[i].type, mib_table[i].size, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先通过 MIB_NAME 获取 mib id，然后通过 mib id 获取 mib 值（调用的也是<code>_mib_get</code>，最后再拷贝到 buff 中。这两次拷贝都是用的 <code>strcpy</code>，因此只要 mib 值字符串不超过 1024 字节大小，通过 <code>flash get</code>出来的值都不会有问题。</p>
+<h5 id="set-func"><a href="#set-func" class="headerlink" title="set_func"></a>set_func</h5><p><code>set_func</code>函数跟<code>get_func</code>差不多，这里定义省略了不重要的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">set_func</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> argNum, index, ret = <span class="number">0</span>;</span><br><span class="line">	<span class="type">char</span> buffer[<span class="number">2048</span>];</span><br><span class="line">    ...</span><br><span class="line">			argNum += mib_table_value_resolve(index, argc - argNum, &amp;argv[argNum], buffer);</span><br><span class="line">			<span class="keyword">if</span> ((tmpType = mib_table_set_by_index(index, buffer)) != <span class="number">0</span>) &#123;</span><br><span class="line">				cdType |= tmpType;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;set %s=%s\n&quot;</span>, mib, buffer);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;set %s=%s fail!\n&quot;</span>, mib, buffer);</span><br><span class="line">				ret = error;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (flag == CONFIG_MIB_CHAIN) &#123;</span><br><span class="line">			<span class="keyword">if</span> ((tmpType = mib_chain_set_by_name(mib, argv[argNum + <span class="number">1</span>])) != <span class="number">0</span>) &#123;</span><br><span class="line">				cdType |= tmpType;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;set %s=%s\n&quot;</span>, argv[argNum], argv[argNum + <span class="number">1</span>]);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;set %s=%s fail!\n&quot;</span>, argv[argNum], argv[argNum + <span class="number">1</span>]);</span><br><span class="line">				ret = error;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			argNum += <span class="number">2</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ((cdType &amp; CURRENT_SETTING) &amp;&amp; _mib_update(CURRENT_SETTING) == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;CS Flash error! \n&quot;</span>);</span><br><span class="line">		ret = error;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ((cdType &amp; HW_SETTING) &amp;&amp; _mib_update(HW_SETTING) == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;HS Flash error! \n&quot;</span>);</span><br><span class="line">		ret = error;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先调用<code>mib_table_value_resolve</code>将 flash 命令中需要设置的参数值拷贝到 buffer 中，这里面用的是 strcpy 进行拷贝。</p>
+<p>然后调用<code>mib_table_set_by_index</code>将 buffer 中的值设置进 mib 中。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Set MIB Value</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="type">static</span> CONFIG_DATA_T <span class="title function_">mib_table_set_by_index</span><span class="params">(<span class="type">int</span> index, <span class="type">char</span> *buffer)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> id;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> mibvalue[<span class="number">1024</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">	CONFIG_DATA_T cdtype;</span><br><span class="line"></span><br><span class="line">	id = mib_table[index].id;</span><br><span class="line">	cdtype = mib_table[index].mib_type;</span><br><span class="line"></span><br><span class="line">	string_to_mib(mibvalue, buffer, mib_table[index].type, mib_table[index].size);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (_mib_set(id, mibvalue))</span><br><span class="line">		<span class="keyword">return</span> cdtype;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<code>string_to_mib</code>中对<code>STRING_T</code>类型的 mib 项，是通过<code>strncpy</code>进行拷贝，拷贝时<code>dest</code>的大小为1024字节，如果mib项的大小大于1024字节，会出现数组越界的问题。</p>
+<p>最后再调用<code>_mib_set</code>将设置值写入 mib 项中，完成设置。</p>
+<p>设置完成之后会调用<code>_mib_update</code>更新mib配置。</p>
+<h4 id="七、配置文件"><a href="#七、配置文件" class="headerlink" title="七、配置文件"></a>七、配置文件</h4><p>我们通常有配置文件，里面会包含一些mib配置，那么配置文件有什么用呢？跟mib配置有什么关系呢？</p>
+<p>首先看一下<code>/etc/config_default.xml</code>配置文件的内容格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Value Name=&quot;WLAN1_AGGREGATION&quot; Value=&quot;3&quot;/&gt;</span><br><span class="line">      &lt;chain chainName=&quot;ATM_VC_TBL&quot;&gt; &lt;!--index=0--&gt;</span><br><span class="line">              &lt;Value Name=&quot;AddrMode&quot; Value=&quot;1&quot;/&gt;</span><br><span class="line">              &lt;Value Name=&quot;Ipv6Dhcp&quot; Value=&quot;1&quot;/&gt;</span><br><span class="line">              &lt;Value Name=&quot;Ipv6DhcpRequest&quot; Value=&quot;2&quot;/&gt;</span><br><span class="line">              &lt;Value Name=&quot;enableIGMP&quot; Value=&quot;1&quot;/&gt;</span><br><span class="line">      &lt;/chain&gt;</span><br></pre></td></tr></table></figure>
+
+<p>对于mib项的获取和设置，是通过发送消息队列给<code>configd</code>这个程序去进行的，而在<code>configd</code>这个程序的main函数开始的时候会调用<code>mib_init</code>进行mib的初始化，其实在flash程序中也会进行<code>mib_init</code>，初始化是必不可少的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">mib_init</span><span class="params">(<span class="type">void</span>)</span> <span class="comment">/* Initialize */</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="keyword">if</span> (hs_valid == <span class="number">0</span> &amp;&amp;</span><br><span class="line">		mib_init_mib_with_program_default(HW_SETTING, FLASH_DEFAULT_TO_ALL, CONFIG_MIB_ALL)) &#123;</span><br><span class="line">		hs_valid = <span class="number">1</span>;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;\033[0;31m%s: Invalid HS config file, reset to default!\n\033[0m&quot;</span>, __FUNCTION__);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (cs_valid == <span class="number">0</span> &amp;&amp;</span><br><span class="line">		mib_init_mib_with_program_default(CURRENT_SETTING, FLASH_DEFAULT_TO_ALL, CONFIG_MIB_ALL)) &#123;</span><br><span class="line">		cs_valid = <span class="number">1</span>;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;\033[0;31m%s: Invalid CS config file, reset to default!\n\033[0m&quot;</span>, __FUNCTION__);</span><br><span class="line">	&#125;</span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>mib_init</code>会调用<code>mib_init_mib_with_program_default</code>，接着看该函数的实现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">mib_init_mib_with_program_default</span><span class="params">(CONFIG_DATA_T data_type, <span class="type">int</span> action, CONFIG_MIB_T range)</span></span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">if</span> (access(data_type == HW_SETTING ? CONF_ON_XMLFILE_DEFAULT_HS : CONF_ON_XMLFILE_DEFAULT, R_OK) == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (_load_xml_file(data_type == HW_SETTING ? CONF_ON_XMLFILE_DEFAULT_HS : CONF_ON_XMLFILE_DEFAULT, data_type, <span class="number">0</span>, range) == <span class="number">-1</span>) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;[%s] Error: _load_xml_file %s fail !\n&quot;</span>, __FUNCTION__, data_type == HW_SETTING ? CONF_ON_XMLFILE_DEFAULT_HS : CONF_ON_XMLFILE_DEFAULT);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中<code>CONF_ON_XMLFILE_DEFAULT</code>和<code>CONF_ON_XMLFILE_DEFAULT_HS</code>的定义如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> CONF_ON_XMLFILE_DEFAULT[] = <span class="string">&quot;/etc/config_default.xml&quot;</span>;</span><br><span class="line"><span class="type">static</span> <span class="type">const</span> <span class="type">char</span> CONF_ON_XMLFILE_DEFAULT_HS[] = <span class="string">&quot;/etc/config_default_hs.xml&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这两个xml文件也就是我们的默认配置文件。在调用<code>access</code>确定此进程能对配置文件进行读操作之后，调用<code>_load_xml_file</code>。</p>
+<p><code>_load_xml_file</code>函数实现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> _load_xml_file(<span class="type">const</span> <span class="type">char</span> *loadfile, CONFIG_DATA_T cnf_type, <span class="type">unsigned</span> <span class="type">char</span> flag, CONFIG_MIB_T action)</span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">    <span class="comment">/* 以读的方式打开配置文件 */</span></span><br><span class="line">    <span class="keyword">if</span> (!(fp = fopen(loadfile, <span class="string">&quot;r&quot;</span>))) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;User configuration file can not be opened: %s\n&quot;</span>, loadfile);</span><br><span class="line">		ret = error;</span><br><span class="line">		<span class="built_in">free</span>(head);</span><br><span class="line">		<span class="keyword">goto</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">    flock(fileno(fp), LOCK_SH);  <span class="comment">/* 对配置文件建立共享锁定 */</span></span><br><span class="line">    pstr = get_line(fp, LINE, <span class="keyword">sizeof</span>(LINE));  <span class="comment">/* 读取文件第一行数据，并去除行首行尾的空白符 */</span></span><br><span class="line">	<span class="keyword">if</span>(pstr==<span class="literal">NULL</span>)&#123;</span><br><span class="line">		ret = error;</span><br><span class="line">		<span class="built_in">free</span>(head);</span><br><span class="line">		flock(fileno(fp), LOCK_UN);</span><br><span class="line">		<span class="keyword">goto</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">    ...</span><br><span class="line">	<span class="keyword">while</span> (!feof(fp)) &#123;</span><br><span class="line">		pstr = get_line(fp, LINE, <span class="keyword">sizeof</span>(LINE));	<span class="comment">//get one line from the file</span></span><br><span class="line">		<span class="keyword">if</span>(pstr != <span class="literal">NULL</span>)&#123;</span><br><span class="line">			<span class="keyword">if</span>(<span class="built_in">strlen</span>(pstr) &gt; <span class="number">0</span>)&#123;</span><br><span class="line">				<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(pstr, CONFIG_TRAILER)  <span class="comment">/* 文件读到了最后一行，退出 */</span></span><br><span class="line">				    || !<span class="built_in">strcmp</span>(pstr, CONFIG_TRAILER_HS)) &#123;</span><br><span class="line">				    isEnd=<span class="number">1</span>;</span><br><span class="line">					<span class="keyword">break</span>;	<span class="comment">// end of configuration</span></span><br><span class="line">				&#125;</span><br><span class="line">				<span class="comment">/* 把从配置文件中读取的每一行更新到mib中 */</span></span><br><span class="line">				<span class="keyword">if</span> (update_setting(fp, pstr, cnf_type, head, action) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">					<span class="built_in">printf</span>(<span class="string">&quot;update setting fail!\n&quot;</span>);</span><br><span class="line">					ret = error;</span><br><span class="line">					<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>最终会调用<code>update_setting</code>，看此函数的实现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">update_setting</span><span class="params">(FILE *fp, <span class="type">char</span> *line, CONFIG_DATA_T cnf_type, chainNode_t * head, CONFIG_MIB_T action)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">strncmp</span>(line, <span class="string">&quot;&lt;Value&quot;</span>, <span class="number">6</span>))&#123;</span><br><span class="line">		<span class="keyword">if</span>(action == CONFIG_MIB_ALL || action == CONFIG_MIB_TABLE)</span><br><span class="line">			ret = table_setting(line, cnf_type);</span><br><span class="line">	&#125;<span class="keyword">else</span> <span class="keyword">if</span> (!<span class="built_in">strncmp</span>(line, <span class="string">&quot;&lt;chain&quot;</span>, <span class="number">6</span>))&#123;</span><br><span class="line">		<span class="keyword">if</span>(action == CONFIG_MIB_ALL || action == CONFIG_MIB_CHAIN)</span><br><span class="line">			ret = chain_setting(fp, line, cnf_type, head);</span><br><span class="line">		<span class="keyword">else</span>&#123;</span><br><span class="line">			<span class="comment">// ignore the whole chain</span></span><br><span class="line">			DEBUGP(<span class="string">&quot;skip %s\n&quot;</span>, line);</span><br><span class="line">			mib_chain_member_entry_T root_desc_fake;</span><br><span class="line">			skip_value_object(fp, &amp;root_desc_fake);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Unknown statement: %s\n&quot;</span>, line);</span><br><span class="line">		ret = error;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>根据在配置文件中读取的每行字符串数据中的字眼来分别设置mib_table或者mib_chain。</p>
+<p>看一下mib_table的设置，调用<code>table_setting</code>：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">int</span> <span class="title function_">table_setting</span><span class="params">(<span class="type">char</span> *line, CONFIG_DATA_T cnf_type)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> i;</span><br><span class="line">	<span class="type">char</span> *pname, *pvalue;</span><br><span class="line">	<span class="type">char</span> *first, *last;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">char</span> mibvalue[<span class="number">1024</span>];</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 获取mib的name</span></span><br><span class="line">	first = <span class="built_in">strchr</span>(line, <span class="string">&#x27;&quot;&#x27;</span>);</span><br><span class="line">	<span class="keyword">if</span>(first==<span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> error;</span><br><span class="line">	pname = first+<span class="number">1</span>;</span><br><span class="line">	last = <span class="built_in">strchr</span>(pname, <span class="string">&#x27;&quot;&#x27;</span>);</span><br><span class="line">	<span class="keyword">if</span>(last==<span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> error;</span><br><span class="line">	*last = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line">	DEBUGP(<span class="string">&quot;table name=%-25s&quot;</span>, pname);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; mib_table[i].id; i++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (mib_table[i].mib_type != cnf_type)</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		<span class="comment">/* 在mib_table中通过name找到该项mib */</span></span><br><span class="line">		<span class="keyword">if</span> (!<span class="built_in">strcmp</span>(mib_table[i].name, pname))</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (mib_table[i].id == <span class="number">0</span>) &#123;</span><br><span class="line">		TRACE(STA_WARNING, <span class="string">&quot;%s: Invalid table entry name: %s\n&quot;</span>, __FUNCTION__, pname);</span><br><span class="line">		<span class="comment">//return error;</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 获取mib的value</span></span><br><span class="line">	first = <span class="built_in">strchr</span>(last+<span class="number">1</span>, <span class="string">&#x27;&quot;&#x27;</span>);</span><br><span class="line">	<span class="keyword">if</span>(first==<span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> error;</span><br><span class="line">	pvalue = first+<span class="number">1</span>;</span><br><span class="line">	last = <span class="built_in">strrchr</span>(pvalue, <span class="string">&#x27;&quot;&#x27;</span>);</span><br><span class="line">	<span class="keyword">if</span> (last == <span class="literal">NULL</span>)</span><br><span class="line">		pvalue = (<span class="type">char</span> *)empty_str;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		*last = <span class="string">&#x27;\0&#x27;</span>;</span><br><span class="line"></span><br><span class="line">	DEBUGP(<span class="string">&quot;value=%s\n&quot;</span>, pvalue);</span><br><span class="line">	<span class="comment">// 将value写入到mibvalue中</span></span><br><span class="line">	<span class="keyword">if</span> (string_to_mib_ex(mibvalue, pvalue, mib_table[i].type, mib_table[i].size, <span class="number">1</span>))</span><br><span class="line">		<span class="keyword">return</span> error;</span><br><span class="line">	<span class="comment">// 将mibvalue设置到对应的mib_table项中</span></span><br><span class="line">	<span class="keyword">if</span> (!MIB_SET(mib_table[i].id, mibvalue)) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Set MIB[%s] error!\n&quot;</span>, mib_table[i].name);</span><br><span class="line">		<span class="keyword">return</span> error;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其实就是通过字符串操作解析出name和value，通过name找到对应的mib项，调用<code>MIB_SET</code>将value设置到该mib项中，<code>MIB_SET</code>其实就是调用了之前用来设置mib项的<code>mib_set</code>或者<code>_mib_set</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">int</span> <span class="title function_">MIB_SET</span><span class="params">(<span class="type">int</span> id, <span class="type">void</span> *value)</span> </span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (load_to_configd)</span><br><span class="line">		<span class="keyword">return</span> mib_set(id, value);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> _mib_set(id, value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而对于mib_chain的设置稍微复杂些，但基本操作都是差不多，这里不细说了。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><p>综上，配置文件中的内容会在<code>mib_init</code>时读出来，覆盖默认的mib配置项。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/08/05/hexo-learn/" rel="prev" title="Hexo Learn">
+      <i class="fa fa-chevron-left"></i> Hexo Learn
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/08/05/IIC%E8%AF%A6%E8%A7%A3/" rel="next" title="IIC详解">
+      IIC详解 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LinWenXin"
+      src="/images/myicon.jpg">
+  <p class="site-author-name" itemprop="name">LinWenXin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Linwenxin502" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Linwenxin502" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">LinWenXin</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
